@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "preserveConstEnums": true
+  },
+  "exclude": [
+    "node_modules",
+    "bower_components",
+    "typings"
+  ]
+}

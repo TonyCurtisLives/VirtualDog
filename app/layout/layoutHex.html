@@ -1,0 +1,125 @@
+<div id="dogHexLayout">
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,800italic,400,700,800' rel='stylesheet'
+    type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Raleway:400,700,300,200,100,900' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Amatic+SC:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="../../content/hexagons.css">
+  <ul id="categories" class="clr">
+    <li class="pusher"></li>
+    <li class="pusher"></li>
+    <li class="pusher"></li>
+    <li>
+      <div class="selectStyle" ng-controller="masterController as master">
+        <img src="../../content/20151127_121219.jpg" alt="" />
+        <h1>Master: {{master.familiarName}}</h1>
+        <p class="sliderParagraph">
+          Object: <select id="selectObject" ng-model="master.selectedObject" ng-options="object.name for object in master.mastersObjects"></select>
+          <br><br> 
+          Action: <select id="selectAction" ng-model="master.selectedAction" ng-options="masterAction.actionName for masterAction in master.masterActions"></select>
+          $nbsp<button class="dogButtonStyle" id="buttonMasterAction" ng-click="master.selectedAction.actionFunc(master.selectedObject)">Perform Action</button>
+        </p>
+      </div>
+    </li>
+    <li>
+      <div class="selectStyle" ng-controller="dogDomainController as domainController">
+        <!--<img ng-src="../../content/zeushome.jpg" alt=""/>-->
+        <img ng-src="../../content/{{domainController.place.imagePath}}" alt="" />
+        <h1>Doggie Domain</h1>
+        <p class="sliderParagraph">
+          Domain: <select ng-model="domainController.place" ng-options="dogPlace.name for dogPlace in domainController.places"
+            ng-change="domainController.domainSelected(domainController.place)">
+                  </select><br>
+          <br>
+        </p>
+      </div>
+    </li>
+    <li class="pusher"></li>
+    <li>
+      <div ng-controller="dogController as dog">
+        <!--<div>
+        <span>-->
+        <!--<h3>Dog's Objects:</h3>-->
+        <br> Dog Blog
+        <br>
+        <div id="barkButtonDiv">
+          <button class="dogButtonStyle" id="barkButton" ng-click="dog.testBark()">Bark</button>
+        </div>
+        <br>
+        <div>
+          <br>
+          <!--<textarea ng-model="dog.blogContent"></textarea>-->
+          <textarea id="dogTextArea" ng-model="dog.blogContent"></textarea>
+        </div>
+        <br>
+        <!--<ul ng-repeat="chewObject in dog.chewObjects">
+            <li>{{chewObject.name}} - ${{chewObject.monetaryValue}} - {{chewObject.getSpitStateText()}} - {{chewObject.getStateText()}}</li>
+          </ul>-->
+
+        <!--</span>
+      </div>-->
+      </div>
+    </li>
+    <li>
+      <div>
+        <img src="../../content/IMG_2823.jpg" alt="" />
+      </div>
+    </li>
+    <li>
+      <div class="selectStyle" ng-controller="roverPhotosController as roverController">
+        <!--<img ng-src="../../content/zeushome.jpg" alt=""/>-->
+        <img ng-src="{{roverController.roverPhotoUrl}}" alt="" />
+        <h1>Mars Rovers</h1>
+        <p class="sliderParagraph">
+          Camera: <select id="selectCamera" ng-model="roverController.roverCamera" ng-options="camera.full_name for camera in roverController.cameras"></select><br><br>
+          &nbsp<button class="dogButtonStyle" id="buttonGetPhotos" ng-click="roverController.getPhotos(roverController.roverCamera.name)">Get Rover Photos</button>
+          <!--Domain: <select ng-model="domainController.place" ng-options="dogPlace.name for dogPlace in domainController.places"
+            ng-change="domainController.domainSelected(domainController.place)">
+                  </select><br>-->
+          <br>
+        </p>
+      </div>
+    </li>
+
+    <!--<li>
+      <div ng-controller="tunesController as tunes">
+        <br> Dog Tunes
+        <br>{{tunes.tunesError}}
+        <div id="barkButtonDiv">
+          <button class="dogButtonStyle" id="tunesButton" ng-click="tunes.getLovedTracks()">Get Tunes</button>
+        </div>
+        <br>
+        <div>
+          <br>
+          <textarea id="tunesTable" ng-model="tunes.tracksText"></textarea>
+        </div>
+        <br>
+      </div>
+    </li>-->
+
+    <li>
+      <div class="selectStyle" ng-controller="peopleController as peopleCtrl">
+        <img src="../../content/PostmanZeus7s.gif" alt="" />
+        <h1>Other People</h1>
+        <p class="sliderParagraph">
+          Person: <select id="selectPerson" ng-model="peopleCtrl.selectedPerson" ng-options="person.familiarName for person in peopleCtrl.people"></select>
+          <br><br>          
+          Action: <select id="selectPersonAction" ng-model="peopleCtrl.selectedAction" ng-options="personAction.actionName for personAction in peopleCtrl.personActions"></select>
+          <br><br>
+          <button class="dogButtonStyle" id="personActionButton" ng-click="peopleCtrl.selectedAction.actionFunc(peopleCtrl.selectedPerson)">Perform Action</button>
+        </p>
+      </div>
+    </li>
+    <li>
+      <div class="selectStyle" ng-controller="otherAnimalController as otherAnimalCtrl">
+        <img src="../../content/4609603403_bdcd1a7813_o.jpg" alt="" />
+        <h1>Other Animals</h1>
+        <p class="sliderParagraph">
+          Animal: <select id="selectAnimal" ng-model="otherAnimalCtrl.selectedAnimal" ng-options="animal.familiarName for animal in otherAnimalCtrl.otherAnimals"
+            ng-change="otherAnimalCtrl.performAction()">
+                  </select><br>
+          <br>
+        </p>
+      </div>
+    </li>
+  </ul>
+</div>
