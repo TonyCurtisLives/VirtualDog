@@ -10,13 +10,13 @@ npm start
 
 Requires the following global installations:
 
--npm
--bower
--typescript
--typings
+- npm
+- bower
+- typescript
+- typings
 
 Also globally installed:
 
--gulp
--karma-cli
--tslint (used by VSCode) 
+- gulp
+- karma-cli
+- tslint (used by VSCode) 
