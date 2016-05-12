@@ -22,12 +22,12 @@
     "node-rest-client": "^1.8.0"
   },
   "scripts": {
-    "prestart": "npm install",
-    "start": "concurrently \"http-server -a 0.0.0.0 -p 8000\" \"node server/tinyserv\" ",
+    "start": "concurrently \"http-server -a 0.0.0.0 -p 8042\" \"node server/tinyserv\" \"tsc -w\" ",
+    "bower-typings": "concurrently \"bower install\" \"typings install\" ",
     "bower": "bower install",
     "typings": "typings install",
     "tinyserv": "node tinyserv"
   },
   "author": "Tony Curtis",
-  "license": "ISC"
+  "license": "MIT"
 }

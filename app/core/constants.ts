@@ -33,7 +33,7 @@
     public roverUrl = 'http://localhost:8200//mars-photos/api/v1/rovers/curiosity/photos';
     public apiKey = 'DEMO_KEY';
     public camera = 'FHAZ';
-    public earthDate = '2015-8-26';
+    public earthDate = '2014-8-26';
     public roverName = 'curiosity';
     public alternateUrl = 'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos';
   }
