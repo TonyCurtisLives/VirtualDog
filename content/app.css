@@ -1,0 +1,152 @@
+﻿@font-face {
+  font-family: 'GoodDogCool';
+  src: url('GOODDC__.TTF');
+}
+.pageTitle {
+  font-family: 'GoodDogCool';
+  margin-left: 34%;
+  font-size: 3em;
+}
+
+/*span {
+  font-style: italic;
+}*/
+
+td {
+  border-width: 3px;
+  border-style: outset;
+  border-color: bisque;
+}
+
+.sliderParagraph {
+  text-align: left;
+  background-color: rgba(0, 128, 128, 0.1);
+}
+
+	.selectStyle select {
+		border: 0 !important;  /*Removes border*/
+		-webkit-appearance: none;  /*Removes default chrome and safari style*/
+		-moz-appearance: none; /* Removes Default Firefox style*/
+    appearance:none;
+		background: ivory url(selectArrow.png) no-repeat 90% center;
+		width: 100px; /*Width of select dropdown to give space for arrow image*/
+		text-indent: 0.01px; /* Removes default arrow from firefox*/
+		text-overflow: "";  /*Removes default arrow from firefox*/ /*My custom style for fonts*/
+		color: #000;
+		border-radius: 15px;
+		padding: 5px;
+		box-shadow: inset 0 0 5px rgba(000,000,000, 0.5);
+    font-weight: bold;
+	}
+  
+  .selectStyle select option {
+    font-weight: bold;
+  }
+  
+  .selectStyle :focus {
+    outline: none;
+  }
+  
+.dogButtonStyle {
+  height: 24px;
+  border-radius: 14px;
+  font-weight: bold;
+  outline: none;
+  border: none;
+  background-color: lightblue;
+  box-shadow: 0 4px #999;
+}
+  
+.dogButtonStyle:hover {
+  background-color: ivory;
+}
+
+.dogButtonStyle:active {
+  background-color: ivory;
+  box-shadow: 0 1px #666;
+  transform: translateY(3px);
+}
+
+#buttonMasterAction {
+  width: 110px;
+  margin-left: 70px;
+}
+
+#selectAction {
+  width: 110px;
+  background: ivory url(selectArrow.png) no-repeat 95% center;
+}
+
+#selectObject {
+  width: 230px;
+  background: ivory url(selectArrow.png) no-repeat 97% center;
+}
+
+#dogTextArea {
+  height: 275px;
+  width: 320px;
+  background: url(ZeusMouthLight.jpg) center center no-repeat;
+  font-weight: bold;
+}
+
+#tunesTable {
+  height: 275px;
+  width: 320px;
+  background: url(HowlingLight2.jpg) center center no-repeat;
+  font-weight: bold;
+}
+
+#tunesDimensions {
+  height: 275px;
+  width: 320px;
+}
+#tunesCell {
+  width: 320px;
+}
+
+#barkButtonDiv {
+  text-align: center;
+  width: 100%;
+}
+
+#barkButton {
+  margin-left: -42px;
+  width: 80px;
+}
+
+#buttonGetPhotos {
+  margin-left: 70px;
+  width: 130px;
+}
+
+.column-layout {
+  padding: 10px;
+}
+
+#selectPerson {
+  width: 120px;
+  background: ivory url(selectArrow.png) no-repeat 96% center;
+}
+
+#selectPersonAction {
+  width: 190px;
+  background: ivory url(selectArrow.png) no-repeat 96% center;
+}
+
+#selectCamera {
+  width: 230px;
+  background: ivory url(selectArrow.png) no-repeat 96% center;  
+}
+
+#selectAnimal {
+  width: 160px;
+  background: ivory url(selectArrow.png) no-repeat 96% center;
+}
+
+#personActionButton {
+  margin-left: 82px;
+  height: 27px;
+  width: 120px;
+  border-radius: 15px;
+  font-weight: bold;
+}
