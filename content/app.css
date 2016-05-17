@@ -1,5 +1,11 @@
-﻿body {
-  font-family: 'Segoe UI', sans-serif;
+﻿@font-face {
+  font-family: 'GoodDogCool';
+  src: url('GOODDC__.TTF');
+}
+.pageTitle {
+  font-family: 'GoodDogCool';
+  margin-left: 34%;
+  font-size: 3em;
 }
 
 /*span {

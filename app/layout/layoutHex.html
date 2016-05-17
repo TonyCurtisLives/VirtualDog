@@ -5,12 +5,11 @@
   <link href='http://fonts.googleapis.com/css?family=Amatic+SC:400,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" type="text/css" href="../../content/hexagons.css">
   <ul id="categories" class="clr">
-    <li class="pusher"></li>
-    <li class="pusher"></li>
-    <li class="pusher"></li>
+    <!--<li class="pusher"></li>
+    <li class="pusher"></li>-->
     <li>
       <div class="selectStyle" ng-controller="masterController as master">
-        <img src="../../content/20151127_121219.jpg" alt="" />
+        <img src="../../content/zeusmaster.jpg" alt="" />
         <h1>Master: {{master.familiarName}}</h1>
         <p class="sliderParagraph">
           Object: <select id="selectObject" ng-model="master.selectedObject" ng-options="object.name for object in master.mastersObjects"></select>
@@ -61,7 +60,7 @@
     </li>
     <li>
       <div>
-        <img src="../../content/IMG_2823.jpg" alt="" />
+        <img src="../../content/zeussmile.jpg" alt="" />
       </div>
     </li>
     <li>
@@ -111,7 +110,7 @@
     </li>
     <li>
       <div class="selectStyle" ng-controller="otherAnimalController as otherAnimalCtrl">
-        <img src="../../content/4609603403_bdcd1a7813_o.jpg" alt="" />
+        <img src="../../content/alleycat.jpg" alt="" />
         <h1>Other Animals</h1>
         <p class="sliderParagraph">
           Animal: <select id="selectAnimal" ng-model="otherAnimalCtrl.selectedAnimal" ng-options="animal.familiarName for animal in otherAnimalCtrl.otherAnimals"
