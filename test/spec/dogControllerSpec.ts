@@ -24,7 +24,6 @@ describe('In the file dogController.js', () => {
     };
 
     eventNames = <dogsrus.virtdog.EventNames>{};
-
     beforeEach(inject(($injector: ng.auto.IInjectorService) => {
       // we need to construct every time so set up for that
       $controller = $injector.get<ng.IControllerService>('$controller');
@@ -38,8 +37,10 @@ describe('In the file dogController.js', () => {
         eventNames: eventNames
       };
     }));
-
+    
+    // todo: add tests for all startDog properties
     describe('constructor:', () => {
+      // todo: add a beforeEach and move startdog settings and instantiation here
       it('should set familiarName', () => {
         dogConfig.startDog.familiarName = 'testRover';
         // todo: constructing this for every tests, s/b in beforeEach
@@ -79,9 +80,11 @@ describe('In the file dogController.js', () => {
 
     });
 
+    // todo: make sure all master/event/objects are coveres
     describe('eventHandler for the masterThrow event:', () => {
       eventNames.masterThrow = 'masterThrow';
-
+      
+      // todo: add beforeEach for instantiation and spyOn
       it('should blog "master" and "threw"', () => {
         var thrownObject = new dogsrus.virtdog.DogObject(
           'testObject', false, false);
@@ -150,7 +153,6 @@ describe('In the file dogController.js', () => {
           expect(thrownObject.chewOn).not.toHaveBeenCalled();
         });
 
-        // todo: fix
         it('should not blog "returned" because dog eats it', () => {
           var sut: dogsrus.virtdog.DogController = $controller<dogsrus.virtdog.DogController>(
             'dogController', dogConstructorParams)

@@ -33,10 +33,7 @@ body{
 #categories li:nth-child(3n+2){
   margin:0 1%;
 }
-#categories li:nth-child(1){
-  margin-left:0.5%;
-}
-#categories li:nth-child(7){
+#categories li:nth-child(6n-5){
   margin-left:0.5%;
 }
 #categories li:nth-child(6n+4), #categories li:nth-child(6n+5), #categories li:nth-child(6n+6) {
