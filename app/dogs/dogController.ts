@@ -9,6 +9,7 @@ namespace dogsrus.virtdog {
     public coatStyle = '';
     public tailStyle = '';
     public earStyle = '';
+    public breed = '';
     public age = 0;
     public barkSound = '';
     public startupBlog = '';
@@ -19,8 +20,8 @@ namespace dogsrus.virtdog {
     public motherNature2Interval = 1000 * 60 * 60 * 6;
     public dogTiredInterval = 1000 * 60 * 60 * 6;
     public dogSleepDuration = 1000 * 60 * 60 * 6;
-    public dogLonleyEndurance = 1000 * 60 * 60 * 6;
-    public dogLonleyDuration = 1000 * 60 * 60 * 6;
+    public dogLonelyEndurance = 1000 * 60 * 60 * 6;
+    public dogLonelyDuration = 1000 * 60 * 60 * 6;
 
     public blogContent = '';
     public blogPreface: string[] = [''];
@@ -42,7 +43,8 @@ namespace dogsrus.virtdog {
       this.initializeDog(this.dogConfig.startDog);
       this.initializeEvents();
       this.initializeLists();
-
+      
+      //this.blogAboutMe();
       this.blog(this.startupBlog);
     }
 
@@ -58,11 +60,35 @@ namespace dogsrus.virtdog {
 
     // --------------------- private stuff down here -------------------------------
     private initializeDog(dogToCopy: IDog) {
+      // todo: not all dog props are being transfered
       this.familiarName = dogToCopy.familiarName;
       this.barkSound = dogToCopy.barkSound;
       this.age = dogToCopy.age;
       this.startupBlog = dogToCopy.startupBlog;
       this.chewUrgeInterval = dogToCopy.chewUrgeInterval;
+    }
+    
+    private blogAboutMe() {
+      let descriptionBlogText = 
+        `Hi, my name is ${this.familiarName} and ` +
+        `I am a ${this.breed}. I have a ${this.coatStyle} coat, ` +
+        `ears that are ${this.earStyle} ` + 
+        `and a tail that is ${this.tailStyle}, ` + 
+        `I am ${this.age} years old, ` + 
+        `and when I bark it sounds like this: ${this.barkSound}. ` +
+        `I get the urge to chew about every ` + 
+        `${this.chewUrgeInterval / (1000)} seconds, ` + 
+        `but mostly I ${this.defaultAction}. ` +
+        `I get lonely after ` + 
+        `${this.dogLonelyEndurance / (1000 * 60 * 60)} hours, ` + 
+        `and I will complain loudly about it for ` + 
+        `${this.dogLonelyDuration / (1000 * 60)} minutes. ` +
+        `I get sleepy every ` + 
+        `${this.dogTiredInterval / (1000 * 60 * 60)} hours ` + 
+        `and sleep for ${this.dogSleepDuration / (1000 * 60 * 60)}. ` +
+        `Right now my ears are ${this.earState} ` + 
+        `and my tail is ${this.getTailStateText()}.`;   
+      this.blog(descriptionBlogText);    
     }
 
     private initializeEvents() {
@@ -77,12 +103,6 @@ namespace dogsrus.virtdog {
       this.$rootScope.$on(this.eventNames.masterFeed, (event, args) => {
         this.handleEvent(event, args);
       });
-      // this.$rootScope.$on(this.eventNames.masterThrow, (event, args) => {
-      //   this.fetch(<DogObject>args);
-      // });
-      // this.$rootScope.$on(this.eventNames.masterFeed, (event, args) => {
-      //   this.eat(args);
-      // });
       this.$rootScope.$on(this.eventNames.decapitate, (event, args) => {
         this.handleEvent(event, args);
       });
@@ -109,18 +129,8 @@ namespace dogsrus.virtdog {
       });
 
       // bind all event handlers to this
-      // this.fetch = this.fetch.bind(this);
-      // this.eat = this.eat.bind(this);
       this.chewOnSomething = this.chewOnSomething.bind(this);
       this.handleEvent = this.handleEvent.bind(this);
-      // this.decapitateHandler = this.decapitateHandler.bind(this);
-      // this.stopChewing = this.stopChewing.bind(this);
-      // this.bark = this.bark.bind(this);
-      // this.getPetted = this.getPetted.bind(this);
-      // this.giveChase = this.giveChase.bind(this);
-      // this.setDogDomain = this.setDogDomain.bind(this);
-      // this.respondToCommand = this.respondToCommand.bind(this);
-      // this.getExcited = this.getExcited.bind(this);
     }
 
     private initializeLists() {
@@ -171,7 +181,8 @@ namespace dogsrus.virtdog {
           break;
       }
     }
-
+    // todo: may not always want to add datestamp to blog
+    // e.g. if want we want to blog multiple times on one event 
     private blog(blogEntry: string, addPreface = true): void {
       if (blogEntry !== '') {
         if (addPreface) {

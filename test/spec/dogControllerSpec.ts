@@ -1,8 +1,8 @@
 ﻿/// <reference path="../../typings/browser.d.ts" />
 
-describe('In the file dogController.js', () => {
+describe('dogController test', () => {
   beforeEach(angular.mock.module('app.dog'));
-  describe('the dogController\'s', () => {
+  describe('the dogController', () => {
 
     let $rootScope: ng.IRootScopeService,
       $controller: ng.IControllerService,
@@ -20,7 +20,7 @@ describe('In the file dogController.js', () => {
       appTitle: 'Virtual Dog Demo',
       otherDogs: [],
       startDog: <dogsrus.virtdog.IDog>{},
-      version: '1.0.0'
+      version: '0.0.1'
     };
 
     eventNames = <dogsrus.virtdog.EventNames>{};
@@ -38,61 +38,68 @@ describe('In the file dogController.js', () => {
       };
     }));
     
-    // todo: add tests for all startDog properties
-    describe('constructor:', () => {
+    describe('new', () => {
       // todo: add a beforeEach and move startdog settings and instantiation here
-      it('should set familiarName', () => {
-        dogConfig.startDog.familiarName = 'testRover';
-        // todo: constructing this for every tests, s/b in beforeEach
+      it('construction test', () => {
+        dogConfig.startDog.age = 99;
+        dogConfig.startDog.barkSound = 'testbark';
+        dogConfig.startDog.breed = 'testbreed';
+        dogConfig.startDog.chewUrgeInterval = 1000 * 1 * 1 * 1;
+        dogConfig.startDog.coatStyle = 'testCoatStyle';
+        dogConfig.startDog.defaultAction = 'testDefaultAction';
+        dogConfig.startDog.dogLonelyDuration = 1000 * 2 * 1 * 1;
+        dogConfig.startDog.dogLonelyEndurance = 1000 * 3 * 1 * 1;
+        dogConfig.startDog.dogSleepDuration = 1000 * 4 * 1 * 1;
+        dogConfig.startDog.dogTiredInterval = 1000 * 5 * 1 * 1;
+        dogConfig.startDog.earState = 'testEarState';
+        dogConfig.startDog.earStyle = 'testEarStyle';
+        dogConfig.startDog.familiarName = 'testFamiliarName';
+        dogConfig.startDog.motherNature1Interval = 1000 * 6 * 1 * 1;
+        dogConfig.startDog.motherNature2Interval = 1000 * 7 * 1 * 1;
+        dogConfig.startDog.speciesName = 'testSpeciesName';
+        dogConfig.startDog.startupBlog = 'testStartupBlog';
+        dogConfig.startDog.tailState = dogsrus.virtdog.DogTailState.tucked;
+        dogConfig.startDog.tailStyle = 'testTailStyle';
+        
         let sut: dogsrus.virtdog.DogController = $controller<dogsrus.virtdog.DogController>(
           'dogController', dogConstructorParams)
 
-        expect(sut.familiarName).toEqual(dogConfig.startDog.familiarName);
-      });
-
-      it('should set barkSound', () => {
-        dogConfig.startDog.barkSound = 'testBark';
-
-        var sut: dogsrus.virtdog.DogController = $controller<dogsrus.virtdog.DogController>(
-          'dogController', dogConstructorParams)
-
-        expect(sut.barkSound).toEqual(dogConfig.startDog.barkSound);
-      });
-
-      it('should set age', () => {
-        dogConfig.startDog.age = 7;
-
-        var sut: dogsrus.virtdog.DogController = $controller<dogsrus.virtdog.DogController>(
-          'dogController', dogConstructorParams)
-
         expect(sut.age).toEqual(dogConfig.startDog.age);
+        expect(sut.barkSound).toEqual(dogConfig.startDog.barkSound);
+        expect(sut.breed).toEqual(dogConfig.startDog.breed);
+        expect(sut.chewUrgeInterval).toEqual(dogConfig.startDog.chewUrgeInterval);
+        expect(sut.coatStyle).toEqual(dogConfig.startDog.coatStyle);
+        expect(sut.defaultAction).toEqual(dogConfig.startDog.defaultAction);
+        expect(sut.dogLonelyDuration).toEqual(dogConfig.startDog.dogLonelyDuration);
+        expect(sut.dogLonelyEndurance).toEqual(dogConfig.startDog.dogLonelyEndurance);
+        expect(sut.dogSleepDuration).toEqual(dogConfig.startDog.dogSleepDuration);
+        expect(sut.dogTiredInterval).toEqual(dogConfig.startDog.dogTiredInterval);
+        expect(sut.earState).toEqual(dogConfig.startDog.earState);
+        expect(sut.earStyle).toEqual(dogConfig.startDog.earStyle);
+        expect(sut.familiarName).toEqual(dogConfig.startDog.familiarName);
+        expect(sut.motherNature1Interval).toEqual(dogConfig.startDog.motherNature1Interval);
+        expect(sut.motherNature2Interval).toEqual(dogConfig.startDog.motherNature2Interval);
+        expect(sut.speciesName).toEqual(dogConfig.startDog.speciesName);
+        expect(sut.startupBlog).toEqual(dogConfig.startDog.startupBlog);
+        expect(sut.tailState).toEqual(dogConfig.startDog.tailState);
+        expect(sut.tailStyle).toEqual(dogConfig.startDog.tailStyle);
       });
-
-      it('should blog startupBlog', () => {
-        var expectedBlog = 'Test Startup Blog';
-        dogConfig.startDog.startupBlog = expectedBlog;
-
-        var sut: dogsrus.virtdog.DogController = $controller<dogsrus.virtdog.DogController>(
-          'dogController', dogConstructorParams)
-
-        expect(sut.blogContent).toContain(expectedBlog);
-      });
-
     });
 
-    // todo: make sure all master/event/objects are coveres
-    describe('eventHandler for the masterThrow event:', () => {
-      eventNames.masterThrow = 'masterThrow';
-      
-      // todo: add beforeEach for instantiation and spyOn
-      it('should blog "master" and "threw"', () => {
+    // todo: make sure all master/event/objects are covered
+    describe('eventHandlers', () => {
         var thrownObject = new dogsrus.virtdog.DogObject(
           'testObject', false, false);
+      // eventNames.masterThrow = 'masterThrow';
+      
+      // todo: add beforeEach for instantiation and spyOn
+      it('masterThrow test', () => {
         spyOn(thrownObject, 'chewOn');
 
         var sut: dogsrus.virtdog.DogController = $controller<dogsrus.virtdog.DogController>(
           'dogController', dogConstructorParams)
-
+        
+        // multiple asserts are ok here
         expect(sut.blogContent).not.toContain('master');
         expect(sut.blogContent).not.toContain('threw');
 
@@ -103,8 +110,8 @@ describe('In the file dogController.js', () => {
         expect(sut.blogContent).toContain('threw');
       });
 
-      describe('when thrown object is chewy, not edible:', () => {
-        let thrownObject = new dogsrus.virtdog.DogObject(
+      // describe('when thrown object is chewy, not edible:', () => {
+        thrownObject = new dogsrus.virtdog.DogObject(
           'testChewyObject', true, false);
         it('should call chewOn for thrown object', () => {
           spyOn(thrownObject, 'chewOn');
@@ -116,10 +123,10 @@ describe('In the file dogController.js', () => {
 
           expect(thrownObject.chewOn).toHaveBeenCalled();
         });
-      });
+      // });
 
-      describe('when thrown object is not chewy, not edible', () => {
-        let thrownObject = new dogsrus.virtdog.DogObject(
+      // describe('when thrown object is not chewy, not edible', () => {
+        thrownObject = new dogsrus.virtdog.DogObject(
           'testNotChewyObject', false, false);
 
         // todo: fix
@@ -133,10 +140,10 @@ describe('In the file dogController.js', () => {
 
           expect(thrownObject.chewOn).not.toHaveBeenCalled();
         });
-      });
+      // });
 
-      describe('when thrown object is edible', () => {
-        let thrownObject = new dogsrus.virtdog.DogObject(
+      // describe('when thrown object is edible', () => {
+        thrownObject = new dogsrus.virtdog.DogObject(
           'testEdibleObject', false, true);
 
         beforeEach(() => {
@@ -161,7 +168,7 @@ describe('In the file dogController.js', () => {
 
           expect(sut.blogContent).not.toContain('returned');
         });
-      });
+      // });
 
     });
 
