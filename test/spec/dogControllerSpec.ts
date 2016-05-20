@@ -1,4 +1,4 @@
-﻿/// <reference path="../../typings/browser.d.ts" />
+﻿/// <reference path="../../typings/index.d.ts" />
 
 describe('In the file dogController.js', () => {
   beforeEach(angular.mock.module('app.dog'));

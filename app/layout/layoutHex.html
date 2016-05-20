@@ -12,7 +12,7 @@
         <img src="../../content/zeusmaster.jpg" alt="" />
         <h1>Master: {{master.familiarName}}</h1>
         <p class="sliderParagraph">
-          Object: <select id="selectObject" ng-model="master.selectedObject" ng-options="object.name for object in master.mastersObjects"></select>
+          Object: <select id="selectObject" ng-model="master.selectedObject" ng-options="object.name for object in master.masterObjects"></select>
           <br><br> 
           Action: <select id="selectAction" ng-model="master.selectedAction" ng-options="masterAction.actionName for masterAction in master.masterActions"></select>
           $nbsp<button class="dogButtonStyle" id="buttonMasterAction" ng-click="master.selectedAction.actionFunc(master.selectedObject)">Perform Action</button>
