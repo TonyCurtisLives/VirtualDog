@@ -1,4 +1,4 @@
-﻿/// <reference path="../../typings/browser.d.ts" />
+﻿/// <reference path="../../typings/index.d.ts" />
 
 describe('dogController test', () => {
   beforeEach(angular.mock.module('app.dog'));
@@ -83,6 +83,9 @@ describe('dogController test', () => {
         expect(sut.startupBlog).toEqual(dogConfig.startDog.startupBlog);
         expect(sut.tailState).toEqual(dogConfig.startDog.tailState);
         expect(sut.tailStyle).toEqual(dogConfig.startDog.tailStyle);
+      });
+      it('other stuff happens when new', () => {
+        pending('add other constructor tests');
       });
     });
 
@@ -171,7 +174,60 @@ describe('dogController test', () => {
       // });
 
     });
-
+    describe('eventhandler test 2', () => {
+      let sut: dogsrus.virtdog.DogController;
+      let listIndex = 0;
+      let thrownObject: dogsrus.virtdog.DogObject;
+      let thrownObjects = [
+        new dogsrus.virtdog.DogObject('test1', false, false),
+        new dogsrus.virtdog.DogObject('test2', true, false),
+        new dogsrus.virtdog.DogObject('test3', false, true),
+        new dogsrus.virtdog.DogObject('test4', true, true)
+      ];
+      beforeEach(() => {
+        thrownObject = thrownObjects[listIndex];
+        listIndex++;
+        sut = $controller<dogsrus.virtdog.DogController>(
+            'dogController', dogConstructorParams);
+        spyOn(thrownObject, 'chewOn');
+      });
+      it(`should match chewy expectation`, () => {
+        $rootScope.$broadcast(eventNames.masterThrow, thrownObject);
+        
+        if (thrownObject.chewy && !thrownObject.edible) {
+          expect(thrownObject.chewOn).toHaveBeenCalled();
+        } else {
+          expect(thrownObject.chewOn).not.toHaveBeenCalled();
+        }
+      });
+      it(`should match chewy expectation`, () => {
+        $rootScope.$broadcast(eventNames.masterThrow, thrownObject);
+        
+        if (thrownObject.chewy && !thrownObject.edible) {
+          expect(thrownObject.chewOn).toHaveBeenCalled();
+        } else {
+          expect(thrownObject.chewOn).not.toHaveBeenCalled();
+        }
+      });
+      it(`should match chewy expectation`, () => {
+        $rootScope.$broadcast(eventNames.masterThrow, thrownObject);
+        
+        if (thrownObject.chewy && !thrownObject.edible) {
+          expect(thrownObject.chewOn).toHaveBeenCalled();
+        } else {
+          expect(thrownObject.chewOn).not.toHaveBeenCalled();
+        }
+      });
+      it(`should match chewy expectation`, () => {
+        $rootScope.$broadcast(eventNames.masterThrow, thrownObject);
+        
+        if (thrownObject.chewy && !thrownObject.edible) {
+          expect(thrownObject.chewOn).toHaveBeenCalled();
+        } else {
+          expect(thrownObject.chewOn).not.toHaveBeenCalled();
+        }
+      });
+    });
     // todo: eliminate repetitive code
     describe('eventHandler for chew urge interval expiration:', () => {
       dogConfig.startDog.chewUrgeInterval = 100;
