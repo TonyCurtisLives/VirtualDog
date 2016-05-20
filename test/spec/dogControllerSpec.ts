@@ -1,4 +1,4 @@
-﻿/// <reference path="../../typings/browser.d.ts" />
+﻿/// <reference path="../../typings/index.d.ts" />
 
 describe('In the file dogController.js', () => {
   beforeEach(angular.mock.module('app.dog'));
@@ -77,7 +77,9 @@ describe('In the file dogController.js', () => {
 
         expect(sut.blogContent).toContain(expectedBlog);
       });
-
+      it('other stuff happens when new', () => {
+        pending('add other constructor tests');
+      });
     });
 
     // todo: make sure all master/event/objects are coveres
