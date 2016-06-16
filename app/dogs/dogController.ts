@@ -61,11 +61,25 @@ namespace dogsrus.virtdog {
     // --------------------- private stuff down here -------------------------------
     private initializeDog(dogToCopy: IDog) {
       // todo: not all dog props are being transfered
-      this.familiarName = dogToCopy.familiarName;
-      this.barkSound = dogToCopy.barkSound;
       this.age = dogToCopy.age;
-      this.startupBlog = dogToCopy.startupBlog;
+      this.barkSound = dogToCopy.barkSound;
+      this.breed = dogToCopy.breed;
       this.chewUrgeInterval = dogToCopy.chewUrgeInterval;
+      this.coatStyle = dogToCopy.coatStyle;
+      this.defaultAction = dogToCopy.defaultAction;
+      this.dogLonelyDuration = dogToCopy.dogLonelyDuration;
+      this.dogLonelyEndurance = dogToCopy.dogLonelyEndurance;
+      this.dogSleepDuration = dogToCopy.dogSleepDuration;
+      this.dogTiredInterval = dogToCopy.dogTiredInterval;
+      this.earState = dogToCopy.earState;
+      this.earStyle = dogToCopy.earStyle;
+      this.familiarName = dogToCopy.familiarName;
+      this.motherNature1Interval = dogToCopy.motherNature1Interval;
+      this.motherNature2Interval = dogToCopy.motherNature2Interval;
+      this.speciesName = dogToCopy.speciesName;
+      this.startupBlog = dogToCopy.startupBlog;
+      this.tailState = dogToCopy.tailState;
+      this.tailStyle = dogToCopy.tailStyle;
     }
     
     private blogAboutMe() {

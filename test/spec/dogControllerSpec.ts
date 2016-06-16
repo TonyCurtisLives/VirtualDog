@@ -125,32 +125,87 @@ describe('In the file dogController.ts', () => {
       });
     });
     // todo: need to test feed event
-    describe('masterFeed event handler', () => {
-      let foodObject = new vdog.DogObject('dog food', false, true);
-      it('should make tail wag', () => {
-        expect(sut.tailState).not.toEqual(vdog.DogTailState.wagging);
-        $rootScope.$broadcast(eventNames.masterFeed, foodObject);
-        expect(sut.tailState).toEqual(vdog.DogTailState.wagging);
+    describe('the masterFeed event handler', () => {
+      let foodObject: vdog.DogObject;
+      beforeEach(() => {
+        foodObject = new vdog.DogObject('meh', false, false);
       });
       it('should blog master', () => {
         expect(sut.blogContent).not.toContain('master');
         $rootScope.$broadcast(eventNames.masterFeed, foodObject);
         expect(sut.blogContent).toContain('master');
       });
-      it('should blog ignored', () => {
-        expect(sut.blogContent).not.toContain('ignored');
-        $rootScope.$broadcast(eventNames.masterFeed, foodObject);
-        expect(sut.blogContent).toContain('ignored');
+      describe('when object is edible', () => {
+        beforeEach(() => {
+          foodObject.edible = true;
+        });
+        it('should make tail wag', () => {
+          expect(sut.tailState).not.toEqual(vdog.DogTailState.wagging);
+          $rootScope.$broadcast(eventNames.masterFeed, foodObject);
+          expect(sut.tailState).toEqual(vdog.DogTailState.wagging);
+        });
+        describe('and is dog food', () => {
+          beforeEach(() => {
+            foodObject.name = 'dog food';
+          });
+          it('should blog ignored', () => {
+            expect(sut.blogContent).not.toContain('ignored');
+            $rootScope.$broadcast(eventNames.masterFeed, foodObject);
+            expect(sut.blogContent).toContain('ignored');
+          });
+          it('should blog dumped', () => {
+            expect(sut.blogContent).not.toContain('dumped');
+            $rootScope.$broadcast(eventNames.masterFeed, foodObject);
+            expect(sut.blogContent).toContain('dumped');
+          });
+          it('should blog piece', () => {
+            expect(sut.blogContent).not.toContain('piece');
+            $rootScope.$broadcast(eventNames.masterFeed, foodObject);
+            expect(sut.blogContent).toContain('piece');
+          });
+        });
+        describe('and is not dog food', () => {
+          it('should blog devour', () => {
+            expect(sut.blogContent).not.toContain('devour');
+            $rootScope.$broadcast(eventNames.masterFeed, foodObject);
+            expect(sut.blogContent).toContain('devour');
+          });
+          it('should blog immediately', () => {
+            expect(sut.blogContent).not.toContain('immediately');
+            $rootScope.$broadcast(eventNames.masterFeed, foodObject);
+            expect(sut.blogContent).toContain('immediately');
+          });
+          it('should blog look', () => {
+            expect(sut.blogContent).not.toContain('look');
+            $rootScope.$broadcast(eventNames.masterFeed, foodObject);
+            expect(sut.blogContent).toContain('look');
+          });
+          it('should blog hungry', () => {
+            expect(sut.blogContent).not.toContain('hungry');
+            $rootScope.$broadcast(eventNames.masterFeed, foodObject);
+            expect(sut.blogContent).toContain('hungry');
+          });
+        });
       });
-      it('should blog dumped', () => {
-        expect(sut.blogContent).not.toContain('dumped');
-        $rootScope.$broadcast(eventNames.masterFeed, foodObject);
-        expect(sut.blogContent).toContain('dumped');
-      });
-      it('should blog piece', () => {
-        expect(sut.blogContent).not.toContain('piece');
-        $rootScope.$broadcast(eventNames.masterFeed, foodObject);
-        expect(sut.blogContent).toContain('piece');
+      describe('when object is not edible', () => {
+        beforeEach(() => {
+          sut.tailState = vdog.DogTailState.drooped;
+        });
+        it('should make tail elevated', () => {
+          expect(sut.tailState).not.toEqual(vdog.DogTailState.elevated);
+          $rootScope.$broadcast(eventNames.masterFeed, foodObject);
+          expect(sut.tailState).toEqual(vdog.DogTailState.elevated);
+        });
+        it('should blog sniff', () => {
+          expect(sut.blogContent).not.toContain('sniff');
+          $rootScope.$broadcast(eventNames.masterFeed, foodObject);
+          expect(sut.blogContent).toContain('sniff');
+        });
+        it('should blog tilt', () => {
+          expect(sut.blogContent).not.toContain('tilt');
+          $rootScope.$broadcast(eventNames.masterFeed, foodObject);
+          expect(sut.blogContent).toContain('tilt');
+        });
       });
     });
     // todo: need to test thow event
