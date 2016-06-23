@@ -38,31 +38,29 @@ describe('In the file dogController.ts', () => {
           eventNames: eventNames
         };
       });
+      dogConfig.startDog.age = 99;
+      dogConfig.startDog.barkSound = 'testbark';
+      dogConfig.startDog.breed = 'testbreed';
+      dogConfig.startDog.chewUrgeInterval = 1000 * 1 * 1 * 1;
+      dogConfig.startDog.coatStyle = 'testCoatStyle';
+      dogConfig.startDog.defaultAction = 'testDefaultAction';
+      dogConfig.startDog.dogLonelyDuration = 1000 * 2 * 1 * 1;
+      dogConfig.startDog.dogLonelyEndurance = 1000 * 3 * 1 * 1;
+      dogConfig.startDog.dogSleepDuration = 1000 * 4 * 1 * 1;
+      dogConfig.startDog.dogTiredInterval = 1000 * 5 * 1 * 1;
+      dogConfig.startDog.earState = 'testEarState';
+      dogConfig.startDog.earStyle = 'testEarStyle';
+      dogConfig.startDog.familiarName = 'testFamiliarName';
+      dogConfig.startDog.motherNature1Interval = 1000 * 6 * 1 * 1;
+      dogConfig.startDog.motherNature2Interval = 1000 * 7 * 1 * 1;
+      dogConfig.startDog.speciesName = 'testSpeciesName';
+      dogConfig.startDog.startupBlog = 'testStartupBlog';
+      dogConfig.startDog.tailState = vdog.DogTailState.tucked;
+      dogConfig.startDog.tailStyle = 'testTailStyle';
       sut = $controller<vdog.DogController>('dogController', dogConstructorParams);
     });
 
     describe('constructor', () => {
-      beforeEach(() => {
-        dogConfig.startDog.age = 99;
-        dogConfig.startDog.barkSound = 'testbark';
-        dogConfig.startDog.breed = 'testbreed';
-        dogConfig.startDog.chewUrgeInterval = 1000 * 1 * 1 * 1;
-        dogConfig.startDog.coatStyle = 'testCoatStyle';
-        dogConfig.startDog.defaultAction = 'testDefaultAction';
-        dogConfig.startDog.dogLonelyDuration = 1000 * 2 * 1 * 1;
-        dogConfig.startDog.dogLonelyEndurance = 1000 * 3 * 1 * 1;
-        dogConfig.startDog.dogSleepDuration = 1000 * 4 * 1 * 1;
-        dogConfig.startDog.dogTiredInterval = 1000 * 5 * 1 * 1;
-        dogConfig.startDog.earState = 'testEarState';
-        dogConfig.startDog.earStyle = 'testEarStyle';
-        dogConfig.startDog.familiarName = 'testFamiliarName';
-        dogConfig.startDog.motherNature1Interval = 1000 * 6 * 1 * 1;
-        dogConfig.startDog.motherNature2Interval = 1000 * 7 * 1 * 1;
-        dogConfig.startDog.speciesName = 'testSpeciesName';
-        dogConfig.startDog.startupBlog = 'testStartupBlog';
-        dogConfig.startDog.tailState = vdog.DogTailState.tucked;
-        dogConfig.startDog.tailStyle = 'testTailStyle';
-      });
       it('should set barkSound', () => {
         expect(sut.barkSound).toEqual(dogConfig.startDog.barkSound);
       });
