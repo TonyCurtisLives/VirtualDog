@@ -43,8 +43,7 @@ namespace dogsrus.virtdog {
       this.initializeDog(this.dogConfig.startDog);
       this.initializeEvents();
       this.initializeLists();
-      
-      //this.blogAboutMe();
+
       this.blog(this.startupBlog);
     }
 
@@ -60,7 +59,6 @@ namespace dogsrus.virtdog {
 
     // --------------------- private stuff down here -------------------------------
     private initializeDog(dogToCopy: IDog) {
-      // todo: not all dog props are being transfered
       this.age = dogToCopy.age;
       this.barkSound = dogToCopy.barkSound;
       this.breed = dogToCopy.breed;
@@ -81,70 +79,41 @@ namespace dogsrus.virtdog {
       this.tailState = dogToCopy.tailState;
       this.tailStyle = dogToCopy.tailStyle;
     }
-    
+
     private blogAboutMe() {
-      let descriptionBlogText = 
-        `Hi, my name is ${this.familiarName} and ` +
-        `I am a ${this.breed}. I have a ${this.coatStyle} coat, ` +
-        `ears that are ${this.earStyle} ` + 
-        `and a tail that is ${this.tailStyle}, ` + 
-        `I am ${this.age} years old, ` + 
-        `and when I bark it sounds like this: ${this.barkSound}. ` +
-        `I get the urge to chew about every ` + 
-        `${this.chewUrgeInterval / (1000)} seconds, ` + 
-        `but mostly I ${this.defaultAction}. ` +
-        `I get lonely after ` + 
-        `${this.dogLonelyEndurance / (1000 * 60 * 60)} hours, ` + 
-        `and I will complain loudly about it for ` + 
-        `${this.dogLonelyDuration / (1000 * 60)} minutes. ` +
-        `I get sleepy every ` + 
-        `${this.dogTiredInterval / (1000 * 60 * 60)} hours ` + 
-        `and sleep for ${this.dogSleepDuration / (1000 * 60 * 60)}. ` +
-        `Right now my ears are ${this.earState} ` + 
-        `and my tail is ${this.getTailStateText()}.`;   
-      this.blog(descriptionBlogText);    
+      this.blog(`Hi, my name is ${this.familiarName} and
+        I am a ${this.breed}. I have a ${this.coatStyle} coat,
+        ears that are ${this.earStyle}
+        and a tail that is ${this.tailStyle}, 
+        I am ${this.age} years old,
+        and when I bark it sounds like this: ${this.barkSound}.
+        I get the urge to chew about every
+        ${this.chewUrgeInterval / (1000)} seconds, 
+        but mostly I ${this.defaultAction}. I get lonely after 
+        ${this.dogLonelyEndurance / (1000 * 60 * 60)} hours,
+        and I will complain loudly about it for 
+        ${this.dogLonelyDuration / (1000 * 60)} minutes. I get sleepy every 
+        ${this.dogTiredInterval / (1000 * 60 * 60)} hours
+        and sleep for ${this.dogSleepDuration / (1000 * 60 * 60)}.
+        Right now my ears are ${this.earState}
+        and my tail is ${this.getTailStateText()}.`
+        .replace(/\s+/g, ' '));
     }
 
     private initializeEvents() {
       // setup event handlers
-      this.chewPromise = this.$interval(() => {
-        this.chewOnSomething();
-      }, this.chewUrgeInterval, 0, true);
+      this.chewPromise = this.$interval(this.chewOnSomething, this.chewUrgeInterval, 0, true);
 
-      this.$rootScope.$on(this.eventNames.masterThrow, (event, args) => {
-        this.handleEvent(event, args);
-      });
-      this.$rootScope.$on(this.eventNames.masterFeed, (event, args) => {
-        this.handleEvent(event, args);
-      });
-      this.$rootScope.$on(this.eventNames.decapitate, (event, args) => {
-        this.handleEvent(event, args);
-      });
-      this.$rootScope.$on(this.eventNames.catHiss, (event, args) => {
-        this.handleEvent(event, args);
-      });
-      this.$rootScope.$on(this.eventNames.personPet, (event, args) => {
-        this.handleEvent(event, args);
-      });
-      this.$rootScope.$on(this.eventNames.animalRun, (event, args) => {
-        this.handleEvent(event, args);
-      });
-      this.$rootScope.$on(this.eventNames.changeDomain, (event, args) => {
-        this.handleEvent(event, args);
-      });
-      this.$rootScope.$on(this.eventNames.commandStay, (event: ng.IAngularEvent, args) => {
-        this.handleEvent(event, args);
-      });
-      this.$rootScope.$on(this.eventNames.commandShake, (event: ng.IAngularEvent, args) => {
-        this.handleEvent(event, args);
-      });
-      this.$rootScope.$on(this.eventNames.dogBark, (event, args) => {
-        this.handleEvent(event, args);
-      });
-
-      // bind all event handlers to this
-      this.chewOnSomething = this.chewOnSomething.bind(this);
-      this.handleEvent = this.handleEvent.bind(this);
+      this.$rootScope.$on(this.eventNames.masterThrow, this.handleEvent);
+      this.$rootScope.$on(this.eventNames.masterFeed, this.handleEvent);
+      this.$rootScope.$on(this.eventNames.decapitate, this.handleEvent);
+      this.$rootScope.$on(this.eventNames.catHiss, this.handleEvent);
+      this.$rootScope.$on(this.eventNames.personPet, this.handleEvent);
+      this.$rootScope.$on(this.eventNames.animalRun, this.handleEvent);
+      this.$rootScope.$on(this.eventNames.changeDomain, this.handleEvent);
+      this.$rootScope.$on(this.eventNames.commandStay, this.handleEvent);
+      this.$rootScope.$on(this.eventNames.commandShake, this.handleEvent);
+      this.$rootScope.$on(this.eventNames.dogBark, this.handleEvent);
     }
 
     private initializeLists() {
@@ -154,13 +123,13 @@ namespace dogsrus.virtdog {
       this.blogPreface.push('You\'ll never believe this! ');
       this.blogPreface.push('OMG! ');
       this.blogPreface.push('So I\'m laying here. ');
-      for (let x = 1; x < this.dogConfig.otherDogs.length; x++) {
+      for (let x = 0; x < this.dogConfig.otherDogs.length; x++) {
         this.dogList.push(this.dogConfig.otherDogs[x]);
       }
       this.dogList.push(this.dogConfig.startDog);
     }
 
-    private handleEvent(event: ng.IAngularEvent, args) {
+    private handleEvent = (event: ng.IAngularEvent, args) => {
       switch (event.name) {
         case this.eventNames.masterThrow:
           this.fetch(<DogObject>args);
@@ -194,7 +163,7 @@ namespace dogsrus.virtdog {
           this.displayConfusion(event, args);
           break;
       }
-    }
+    };
     // todo: may not always want to add datestamp to blog
     // e.g. if want we want to blog multiple times on one event 
     private blog(blogEntry: string, addPreface = true): void {
@@ -203,15 +172,15 @@ namespace dogsrus.virtdog {
           blogEntry = this.blogPreface[Math.floor(
             (Math.random() * this.blogPreface.length))] + blogEntry;
         }
-        blogEntry = new Date().toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' }) + ': ' + blogEntry;
-        this.blogContent = blogEntry + '\r\n' + this.blogContent;
+        blogEntry = `${new Date().toLocaleTimeString(navigator.language,
+          { hour: '2-digit', minute: '2-digit' })}: ${blogEntry}`;
+        this.blogContent = `${blogEntry}\r\n${this.blogContent}`;
       }
     }
 
     private fetch(fetchObject: DogObject) {
-      let blogEntry = 'My master just threw a '
-        + fetchObject.name + '. '
-        + 'I ran like mad to grab the ' + fetchObject.name;
+      let blogEntry = `My master just threw a ${fetchObject.name}. ` +
+        `I ran like mad to grab the ${fetchObject.name}`;
       if (fetchObject.flies) {
         blogEntry += ' and leapt like Air Jordan, snatching in mid flight!';
       } else {
@@ -224,8 +193,7 @@ namespace dogsrus.virtdog {
         this.chewObjects.push(fetchObject);
       }
       fetchObject.chewOn();
-      blogEntry += ' I gave the ' + fetchObject.name
-        + ' a good chew or two and dropped it.';
+      blogEntry += ` I gave the ${fetchObject.name} a good chew or two and dropped it.`;
 
       this.blog(blogEntry);
     }
@@ -233,56 +201,60 @@ namespace dogsrus.virtdog {
     private bark(numberOfBarks: number) {
       let totalBarkText = '';
       for (let x = 0; x < numberOfBarks; x++) {
-        totalBarkText += this.barkSound + ' ';
+        totalBarkText += `${this.barkSound} `;
       }
       this.blog(totalBarkText, false);
     }
 
     private eat(food: DogObject) {
-      let blogEntry = '';
-      blogEntry = 'My master just fed me ' + food.name;
+      let blogEntry = `My master just fed me ${food.name}`;
       if (food.edible) {
         if (food.name === 'dog food') {
-          blogEntry += '! I ignored it for an hour, dumped it out on the floor, then ate the ' + food.name
-            + ' one piece at a time!';
+          blogEntry += '! I ignored it for an hour, dumped it out on the floor, then ate the ' +
+            `${food.name} one piece at a time!`;
           this.tailState = DogTailState.wagging;
         } else {
-          blogEntry += '! I devoured the ' + food.name + ' immediately'
-            + ' and looked back up at him with a hungry face.';
+          blogEntry += `! I devoured the ${food.name} immediately ` +
+            'and looked back up at him with a hungry face.';
           this.tailState = DogTailState.wagging;
         }
       } else {
-        blogEntry += '? I sniffed the ' + food.name
-          + ' and tilted my head.';
+        blogEntry += `? I sniffed the ${food.name} and tilted my head.`;
         this.tailState = DogTailState.elevated;
       }
       this.blog(blogEntry);
     }
 
-    private chewOnSomething() {
-      if (this.chewObjects.length !== 0) {
+    private chewOnSomething = () => {
+      if (this.chewObjects.length) {
         this.chewObjects.sort((chewObject1, chewObject2) => {
-          return chewObject1.expensive > chewObject2.expensive ? -1 :
-            chewObject1.expensive < chewObject2.expensive ? 1 :
-              chewObject1.irreplaceable ? -1 : 0;
+          return chewObject1.expensive > chewObject2.expensive
+            ? -1
+            : chewObject1.expensive < chewObject2.expensive
+              ? 1
+              : chewObject1.irreplaceable
+                ? -1
+                : 0;
         });
       }
-
       for (let x = 0; x < this.chewObjects.length; x++) {
         if (this.chewObjects[x].chewy) {
           this.chewObjects[x].chewOn();
-          let description = 'Suddenly I got an urge to chew! '
-            + 'I happily chewed on the ' + this.chewObjects[x].name + '!'
-            + ' The ' + this.chewObjects[x].name + ' is now '
-            + this.chewObjects[x].getSpitStateText() + ' and '
-            + this.chewObjects[x].getStateText()
-            + ((this.chewObjects[x].monetaryValue < 1) ? '.' : (' and is now worth $'
-              + Math.round(this.chewObjects[x].monetaryValue) + '.'));
+          let description = `Suddenly I got an urge to chew!
+            I happily chewed on the ${this.chewObjects[x].name}!
+            The ${this.chewObjects[x].name} is now
+            ${this.chewObjects[x].getSpitStateText()} and
+            ${this.chewObjects[x].getStateText()}
+            ${((this.chewObjects[x].monetaryValue < 1)
+              ? '.'
+              : (` and is now worth $
+                ${Math.round(this.chewObjects[x].monetaryValue)}.`))}`
+            .replace(/\s+/g, ' ');
           this.blog(description);
           return;
         }
       }
-    }
+    };
 
     private stopChewing() {
       this.$interval.cancel(this.chewPromise);
@@ -296,16 +268,16 @@ namespace dogsrus.virtdog {
 
     private getPetted(person: IAnimal) {
       this.tailState = DogTailState.wagging;
-      let description = person.familiarName
-        + ' just gave me a good petting! I smile and look at '
-        + person.familiarName + ' with my big dog eyes look!';
+      let description = person.familiarName +
+        ' just gave me a good petting! I smile and look at ' +
+        `${person.familiarName} with my big dog eyes look!`;
       this.blog(description, true);
     }
 
     private giveChase(someAnimal: IAnimal) {
       this.tailState = DogTailState.wagging;
-      let description = 'I just chased ' + someAnimal.familiarName
-        + ' through the ' + this.dogDomain.name + '!!!';
+      let description = `I just chased ${someAnimal.familiarName} ` +
+        `through the ${this.dogDomain.name}!!!`;
       this.blog(description, true);
     }
 
@@ -314,7 +286,7 @@ namespace dogsrus.virtdog {
     }
 
     private respondToCommand(somePerson: IAnimal, commandName: string) {
-      let description = somePerson.familiarName + ' just told me to ' + commandName + '! ';
+      let description = `${somePerson.familiarName} just told me to ${commandName}! `;
       if (somePerson.familiarName === 'The Mailman') {
         this.giveChase(somePerson);
         this.blog(description, false);
@@ -333,16 +305,15 @@ namespace dogsrus.virtdog {
     }
 
     private getExcited(someAnimal: IAnimal) {
-      let description = someAnimal.familiarName + ' wants to play with me!!! I wag my tail vigorously whine and jump up!!!';
+      let description = someAnimal.familiarName +
+        ' wants to play with me!!! I wag my tail vigorously whine and jump up!!!';
       this.blog(description, true);
     }
 
     private displayConfusion(event: ng.IAngularEvent, args) {
-      this.blog('I tilt my head at ' + event.name + ', akward...');
+      this.blog(`I tilt my head at ${event.name}, akward...`);
     }
 
   }
-  (() => {
-    dogsrus.virtdog.getModuleDog().controller('dogController', DogController);
-  })();
+  getModuleDog().controller('dogController', DogController);
 }

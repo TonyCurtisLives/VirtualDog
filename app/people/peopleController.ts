@@ -2,7 +2,7 @@
   export class PersonAction {
     constructor(
       public actionName: string,
-      public actionFunc: (actionObject: DogObject) => {}
+      public actionFunc: (actionObject: DogObject) => void
     ) { }
   }
 
@@ -16,37 +16,19 @@
     static $inject = ['$rootScope', 'eventNames'];
     constructor(private $rootScope: ng.IRootScopeService, private eventNames: EventNames) {
       this.initializeLists();
-
-      // bind this to actions since they are called from html binding
-      this.commandStay = this.commandStay.bind(this);
-      this.personActions[0].actionFunc = this.personActions[0].actionFunc.bind(this);
-      this.commandShake = this.commandShake.bind(this);
-      this.personActions[1].actionFunc = this.personActions[1].actionFunc.bind(this);
-      this.runAway = this.runAway.bind(this);
-      this.personActions[2].actionFunc = this.personActions[2].actionFunc.bind(this);
-      this.pet = this.pet.bind(this);
-      this.personActions[3].actionFunc = this.personActions[3].actionFunc.bind(this);
     }
 
-    public commandStay(person) {
+    public commandStay = (person) =>
       this.$rootScope.$broadcast(this.eventNames.commandStay, person);
-      return {};
-    }
 
-    public commandShake(person) {
+    public commandShake = (person) =>
       this.$rootScope.$broadcast(this.eventNames.commandShake, person);
-      return {};
-    }
 
-    public runAway(person) {
+    public runAway = (person) =>
       this.$rootScope.$broadcast(this.eventNames.animalRun, person);
-      return {};
-    }
 
-    public pet(person) {
+    public pet = (person) =>
       this.$rootScope.$broadcast(this.eventNames.personPet, person);
-      return {};
-    }
 
     // --------------------- private stuff down here -------------------------------
     private initializeLists() {
@@ -78,7 +60,5 @@
       );
     }
   }
-  (() => {
-    dogsrus.virtdog.getModulePeople().controller('peopleController', PeopleController);
-  })();
+  getModulePeople().controller('peopleController', PeopleController);
 }

@@ -28,7 +28,5 @@
       this.placeObjects[0].monetaryValue = 2000;
     }
   }
-  (() => {
-    dogsrus.virtdog.getModuleDogDomain().controller('dogDomainController', DogDomainController);
-  })();
+  getModuleDogDomain().controller('dogDomainController', DogDomainController);
 }

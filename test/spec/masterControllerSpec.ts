@@ -5,7 +5,7 @@ describe('In the file masterController.ts', () => {
   describe('the MasterController\'s', () => {
     let sut: vdog.MasterController,
       $rootScope: ng.IRootScopeService,
-      eventNames = new vdog.EventNames(),
+      //eventNames = new vdog.EventNames(),
       $controller: ng.IControllerService,
       masterControllerParams: {
         $rootScope: ng.IRootScopeService;
@@ -18,7 +18,8 @@ describe('In the file masterController.ts', () => {
         $rootScope = $injector.get<ng.IRootScopeService>('$rootScope');
         masterControllerParams = {
           $rootScope: $rootScope,
-          eventNames: eventNames
+          eventNames: vdog.eventNames
+          // eventNames: eventNames
         };
       });
       sut = $controller<vdog.MasterController>('masterController', masterControllerParams);

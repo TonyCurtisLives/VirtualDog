@@ -7,12 +7,12 @@ describe('In the file dogController.ts', () => {
       $controller: ng.IControllerService,
       $interval: ng.IIntervalService,
       dogConfig: vdog.DogConfiguration,
-      eventNames: vdog.EventNames,
+      //eventNames: vdog.EventNames,
       dogConstructorParams: {
         $rootScope: ng.IRootScopeService;
         $interval: ng.IIntervalService;
         dogConfig: vdog.DogConfiguration;
-        eventNames: vdog.EventNames
+        eventNames: vdog.EventNames;
       };
 
     dogConfig = {
@@ -21,8 +21,7 @@ describe('In the file dogController.ts', () => {
       startDog: <vdog.IDog>{},
       version: '0.0.1'
     };
-
-    eventNames = new vdog.EventNames();
+    //eventNames = vdog.eventNames;
     beforeEach(() => {
       angular.mock.module('app.dog');
       inject(($injector: ng.auto.IInjectorService) => {
@@ -35,7 +34,8 @@ describe('In the file dogController.ts', () => {
           $rootScope: $rootScope,
           $interval: $interval,
           dogConfig: dogConfig,
-          eventNames: eventNames
+          // this was changed too
+          eventNames: vdog.eventNames
         };
       });
       dogConfig.startDog.age = 99;
@@ -130,7 +130,7 @@ describe('In the file dogController.ts', () => {
       });
       it('should blog master', () => {
         expect(sut.blogContent).not.toContain('master');
-        $rootScope.$broadcast(eventNames.masterFeed, foodObject);
+        $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
         expect(sut.blogContent).toContain('master');
       });
       describe('when object is edible', () => {
@@ -139,7 +139,7 @@ describe('In the file dogController.ts', () => {
         });
         it('should make tail wag', () => {
           expect(sut.tailState).not.toEqual(vdog.DogTailState.wagging);
-          $rootScope.$broadcast(eventNames.masterFeed, foodObject);
+          $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
           expect(sut.tailState).toEqual(vdog.DogTailState.wagging);
         });
         describe('and is dog food', () => {
@@ -148,39 +148,39 @@ describe('In the file dogController.ts', () => {
           });
           it('should blog ignored', () => {
             expect(sut.blogContent).not.toContain('ignored');
-            $rootScope.$broadcast(eventNames.masterFeed, foodObject);
+            $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
             expect(sut.blogContent).toContain('ignored');
           });
           it('should blog dumped', () => {
             expect(sut.blogContent).not.toContain('dumped');
-            $rootScope.$broadcast(eventNames.masterFeed, foodObject);
+            $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
             expect(sut.blogContent).toContain('dumped');
           });
           it('should blog piece', () => {
             expect(sut.blogContent).not.toContain('piece');
-            $rootScope.$broadcast(eventNames.masterFeed, foodObject);
+            $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
             expect(sut.blogContent).toContain('piece');
           });
         });
         describe('and is not dog food', () => {
           it('should blog devour', () => {
             expect(sut.blogContent).not.toContain('devour');
-            $rootScope.$broadcast(eventNames.masterFeed, foodObject);
+            $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
             expect(sut.blogContent).toContain('devour');
           });
           it('should blog immediately', () => {
             expect(sut.blogContent).not.toContain('immediately');
-            $rootScope.$broadcast(eventNames.masterFeed, foodObject);
+            $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
             expect(sut.blogContent).toContain('immediately');
           });
           it('should blog look', () => {
             expect(sut.blogContent).not.toContain('look');
-            $rootScope.$broadcast(eventNames.masterFeed, foodObject);
+            $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
             expect(sut.blogContent).toContain('look');
           });
           it('should blog hungry', () => {
             expect(sut.blogContent).not.toContain('hungry');
-            $rootScope.$broadcast(eventNames.masterFeed, foodObject);
+            $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
             expect(sut.blogContent).toContain('hungry');
           });
         });
@@ -191,17 +191,17 @@ describe('In the file dogController.ts', () => {
         });
         it('should make tail elevated', () => {
           expect(sut.tailState).not.toEqual(vdog.DogTailState.elevated);
-          $rootScope.$broadcast(eventNames.masterFeed, foodObject);
+          $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
           expect(sut.tailState).toEqual(vdog.DogTailState.elevated);
         });
         it('should blog sniff', () => {
           expect(sut.blogContent).not.toContain('sniff');
-          $rootScope.$broadcast(eventNames.masterFeed, foodObject);
+          $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
           expect(sut.blogContent).toContain('sniff');
         });
         it('should blog tilt', () => {
           expect(sut.blogContent).not.toContain('tilt');
-          $rootScope.$broadcast(eventNames.masterFeed, foodObject);
+          $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
           expect(sut.blogContent).toContain('tilt');
         });
       });
