@@ -1,4 +1,5 @@
 ﻿/// <reference path="../../typings/index.d.ts" />
+import vdog = dogsrus.virtdog;
 
 // todo: major refactoring, add event tests
 describe('dogController test', () => {
@@ -40,6 +41,7 @@ describe('dogController test', () => {
           eventNames: vdog.eventNames
         };
       });
+    });
     describe('new', () => {
       // todo: add a beforeEach and move startdog settings and instantiation here
       it('construction test', () => {
@@ -95,3 +97,4 @@ describe('dogController test', () => {
     // todo: need to test thow event
   });
 });
+
