@@ -1,4 +1,5 @@
 ﻿/// <reference path="../../typings/index.d.ts" />
+import vdog = dogsrus.virtdog;
 
 // todo: major refactoring, add event tests
 describe('dogController test', () => {
@@ -8,37 +9,39 @@ describe('dogController test', () => {
     let $rootScope: ng.IRootScopeService,
       $controller: ng.IControllerService,
       $interval: ng.IIntervalService,
-      dogConfig: dogsrus.virtdog.DogConfiguration,
-      eventNames: dogsrus.virtdog.EventNames,
+      dogConfig: vdog.DogConfiguration,
+      //eventNames: vdog.EventNames,
       dogConstructorParams: {
         $rootScope: ng.IRootScopeService;
         $interval: ng.IIntervalService;
-        dogConfig: dogsrus.virtdog.DogConfiguration;
-        eventNames: dogsrus.virtdog.EventNames
+        dogConfig: vdog.DogConfiguration;
+        eventNames: vdog.EventNames;
       };
 
     dogConfig = {
       appTitle: 'Virtual Dog Demo',
       otherDogs: [],
-      startDog: <dogsrus.virtdog.IDog>{},
+      startDog: <vdog.IDog>{},
       version: '0.0.1'
     };
+    //eventNames = vdog.eventNames;
+    beforeEach(() => {
+      angular.mock.module('app.dog');
+      inject(($injector: ng.auto.IInjectorService) => {
+        // we need to construct every time so set up for that
+        $controller = $injector.get<ng.IControllerService>('$controller');
+        $rootScope = $injector.get<ng.IRootScopeService>('$rootScope');
+        $interval = $injector.get<ng.IIntervalService>('$interval');
 
-    eventNames = <dogsrus.virtdog.EventNames>{};
-    beforeEach(inject(($injector: ng.auto.IInjectorService) => {
-      // we need to construct every time so set up for that
-      $controller = $injector.get<ng.IControllerService>('$controller');
-      $rootScope = $injector.get<ng.IRootScopeService>('$rootScope');
-      $interval = $injector.get<ng.IIntervalService>('$interval');
-
-      dogConstructorParams = {
-        $rootScope: $rootScope,
-        $interval: $interval,
-        dogConfig: dogConfig,
-        eventNames: eventNames
-      };
-    }));
-    
+        dogConstructorParams = {
+          $rootScope: $rootScope,
+          $interval: $interval,
+          dogConfig: dogConfig,
+          // this was changed too
+          eventNames: vdog.eventNames
+        };
+      });
+    });
     describe('new', () => {
       // todo: add a beforeEach and move startdog settings and instantiation here
       it('construction test', () => {
@@ -94,3 +97,4 @@ describe('dogController test', () => {
     // todo: need to test thow event
   });
 });
+

@@ -2,7 +2,7 @@
   export class MasterAction {
     constructor(
       public actionName: string,
-      public actionFunc: (actionObject: DogObject) => {}
+      public actionFunc: (actionObject: DogObject) => void
     ) { }
   }
 
@@ -20,23 +20,13 @@
     constructor(private $rootScope: ng.IRootScopeService, private eventNames: EventNames) {
       this.familiarName = 'Dillon';
       this.initializeLists();
-
-      // bind this to actions since they are called from html binding
-      this.throwSomething = this.throwSomething.bind(this);
-      this.masterActions[0].actionFunc = this.masterActions[0].actionFunc.bind(this);
-      this.feedTheDog = this.feedTheDog.bind(this);
-      this.masterActions[1].actionFunc = this.masterActions[1].actionFunc.bind(this);
     }
 
-    public throwSomething(object) {
+    public throwSomething = (object) =>
       this.$rootScope.$broadcast(this.eventNames.masterThrow, object);
-      return {};
-    }
 
-    public feedTheDog(food) {
+    public feedTheDog = (food) =>
       this.$rootScope.$broadcast(this.eventNames.masterFeed, food);
-      return {};
-    }
 
     // --------------------- private stuff down here -------------------------------
     private initializeLists() {
@@ -66,7 +56,5 @@
       this.masterObjects.push(new DogObject('table scraps', true, true));
     }
   }
-  (() => {
-    dogsrus.virtdog.getModulePeople().controller('masterController', MasterController);
-  })();
+  getModulePeople().controller('masterController', MasterController);
 }

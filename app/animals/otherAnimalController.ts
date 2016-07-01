@@ -37,7 +37,5 @@
       this.performAction = this.performAction.bind(this);
     }
   }
-  (() => {
-    dogsrus.virtdog.getModuleOtherAnimal().controller('otherAnimalController', OtherAnimalController);
-  })();
+  getModuleOtherAnimal().controller('otherAnimalController', OtherAnimalController);
 }
