@@ -88,10 +88,37 @@ describe('In the file masterController.ts', () => {
         });
       });
     });
+    // todo: throw this away after proving spyOn works
+    describe('feedTheDog, when $broadcast is being spied on', () => {
+      let foodObject: vdog.DogObject;
+      let wasBroadcast: boolean;
+      beforeEach(() => {
+        foodObject = new vdog.DogObject('meh', false, false);
+        wasBroadcast = false;
+        spyOn($rootScope, '$broadcast');
+        $rootScope.$on(vdog.eventNames.masterFeed, (event, args) => wasBroadcast = true);
+      });
+      describe('and there is no callThrough', () => {
+        it('should not broadcast', () => {
+          sut.feedTheDog(foodObject);
+          expect($rootScope.$broadcast).toHaveBeenCalled();
+          expect(wasBroadcast).toBeFalsy;
+        });
+      });
+      describe('and there is a callThrough', () => {
+        it('should broadcast', () => {
+          (<jasmine.Spy>($rootScope.$broadcast)).and.callThrough();
+          sut.feedTheDog(foodObject);
+          expect($rootScope.$broadcast).toHaveBeenCalled();
+          expect(wasBroadcast).toBeTruthy;
+        });
+      });
+
+    });
   });
   describe('the MasterAction\'s constructor', () => {
     let sut: vdog.MasterAction,
-      actionFunc = (o: vdog.DogObject) => {};
+      actionFunc = (o: vdog.DogObject) => { };
     beforeEach(() => {
       sut = new vdog.MasterAction('masterActionName', actionFunc);
     });
