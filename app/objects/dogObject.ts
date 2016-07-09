@@ -13,6 +13,14 @@
     shredded
   }
 
+  export enum ChewExperience {
+    painful,
+    fair,
+    good,
+    great,
+    squeaky
+  }
+
   export class DogObject {
     public expensive: boolean = false;
     public irreplaceable: boolean = false;
@@ -28,8 +36,13 @@
     constructor(
       public name: string,
       public chewy: boolean,
-      public edible: boolean
-    ) { }
+      public edible: boolean,
+      private chewExperience = ChewExperience.good
+    ) {
+      if (!chewy && chewExperience > ChewExperience.fair) {
+        chewExperience = ChewExperience.fair;
+      }
+    }
 
     public getSpitStateText() {
       return DogSpitState[this.spitState];
@@ -44,7 +57,7 @@
         this.spitState++;
       }
       if (this.impervious) {
-        return;
+        return ChewExperience.painful;
       }
       this.monetaryValue /= 2;
       this.expensive = this.monetaryValue > 100;
@@ -54,10 +67,20 @@
           this.state++;
         } else if (this.chewLimit < 10 && this.state === ObjectState.littleBitChewed) {
           this.state++;
+          if (this.chewExperience !== ChewExperience.squeaky
+            && this.chewExperience > ChewExperience.good) {
+            this.chewExperience--;
+          }
         } else if (this.chewLimit < 5 && this.state === ObjectState.veryChewed) {
           this.state++;
+          if (this.chewExperience !== ChewExperience.squeaky
+            && this.chewExperience > ChewExperience.fair) {
+            this.chewExperience--;
+          } else if (this.chewExperience === ChewExperience.squeaky
+            && this.chewLimit === 0) {
+            this.chewExperience = ChewExperience.fair;
+          }
         }
-        return;
       }
       if (this.state === ObjectState.veryChewed) {
         if (this.shredable) {
@@ -68,6 +91,7 @@
       } else if (this.state < ObjectState.structurallyDamaged) {
         this.state++;
       }
+      return this.chewExperience;
     }
   }
 }

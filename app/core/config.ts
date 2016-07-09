@@ -19,6 +19,7 @@
       motherNature1Interval: 1000 * 60 * 60 * 4,
       motherNature2Interval: 1000 * 60 * 60 * 8,
       speciesName: 'canis familiaris',
+      squeakyOcdChewCount: 10,
       startupBlog: 'I laid down and knocked my tail on the floor twice.',
       tailState: DogTailState.elevated,
       tailStyle: 'curved and furry'
@@ -40,6 +41,7 @@
         motherNature1Interval: 1000 * 60,
         motherNature2Interval: 1000 * 60 * 60 * 1,
         speciesName: 'Canis familiaris',
+        squeakyOcdChewCount: 3,
         startupBlog: 'I wagged my tail, no I wagged my whole body! And while I did that I did my other favorite thing, I wet all over!',
         tailState: DogTailState.wagging,
         tailStyle: ''
@@ -60,6 +62,7 @@
         motherNature1Interval: 1000 * 60 * 60 * 6,
         motherNature2Interval: 1000 * 60 * 60 * 6,
         speciesName: 'Canis familiaris',
+        squeakyOcdChewCount: 10,
         startupBlog: 'I ran up to my master wagging my tail!',
         tailState: DogTailState.wagging,
         tailStyle: ''

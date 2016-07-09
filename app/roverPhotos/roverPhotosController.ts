@@ -19,7 +19,7 @@ namespace dogsrus.virtdog {
       this.roverCamera = this.roverConfig.camera;
       this.getPhotos(this.roverCamera);
     }
-
+    // todo: interface out the photo object and other objects from rest call
     public getPhotos(currentCamera: string) {
       this.roverPhotoDataService.getPhotos(this.photoDate, currentCamera).then((data) => {
         this.photosToDroolOver = (<any>data).photos;

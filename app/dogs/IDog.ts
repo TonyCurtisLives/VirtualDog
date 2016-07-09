@@ -20,6 +20,7 @@ namespace dogsrus.virtdog {
     earStyle: string;
     motherNature1Interval: number;
     motherNature2Interval: number;
+    squeakyOcdChewCount: number;
     startupBlog: string;
     tailState: DogTailState;
     tailStyle: string;
