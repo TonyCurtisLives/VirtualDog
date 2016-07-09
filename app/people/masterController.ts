@@ -23,10 +23,10 @@
     }
 
     public throwSomething = (object) =>
-      this.$rootScope.$broadcast(this.eventNames.catHiss, object);
+      this.$rootScope.$broadcast(this.eventNames.masterThrow, object);
 
     public feedTheDog = (food) =>
-      this.$rootScope.$broadcast(this.eventNames.masterFeed, {});
+      this.$rootScope.$broadcast(this.eventNames.masterFeed, food);
 
     // --------------------- private stuff down here -------------------------------
     private initializeLists() {
