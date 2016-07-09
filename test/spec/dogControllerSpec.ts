@@ -119,7 +119,7 @@ describe('In the file dogController.ts', () => {
       });
     });
     // todo: need to test feed event
-    describe('the masterFeed event handler', () => {
+    describe('masterFeed event listener', () => {
       let foodObject: vdog.DogObject;
       beforeEach(() => {
         foodObject = new vdog.DogObject('meh', false, false);
@@ -134,7 +134,7 @@ describe('In the file dogController.ts', () => {
           foodObject.edible = true;
         });
         it('should make tail wag', () => {
-          expect(sut.tailState).not.toEqual(vdog.DogTailState.wagging);
+          sut.tailState = vdog.DogTailState.drooped;
           $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
           expect(sut.tailState).toEqual(vdog.DogTailState.wagging);
         });
@@ -143,65 +143,114 @@ describe('In the file dogController.ts', () => {
             foodObject.name = 'dog food';
           });
           it('should blog ignored', () => {
-            expect(sut.blogContent).not.toContain('ignored');
             $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
             expect(sut.blogContent).toContain('ignored');
           });
           it('should blog dumped', () => {
-            expect(sut.blogContent).not.toContain('dumped');
             $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
             expect(sut.blogContent).toContain('dumped');
           });
           it('should blog piece', () => {
-            expect(sut.blogContent).not.toContain('piece');
             $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
             expect(sut.blogContent).toContain('piece');
           });
         });
         describe('and is not dog food', () => {
           it('should blog devour', () => {
-            expect(sut.blogContent).not.toContain('devour');
             $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
             expect(sut.blogContent).toContain('devour');
           });
           it('should blog immediately', () => {
-            expect(sut.blogContent).not.toContain('immediately');
             $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
             expect(sut.blogContent).toContain('immediately');
           });
           it('should blog look', () => {
-            expect(sut.blogContent).not.toContain('look');
             $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
             expect(sut.blogContent).toContain('look');
           });
           it('should blog hungry', () => {
-            expect(sut.blogContent).not.toContain('hungry');
             $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
             expect(sut.blogContent).toContain('hungry');
           });
         });
       });
       describe('when object is not edible', () => {
-        beforeEach(() => {
-          sut.tailState = vdog.DogTailState.drooped;
-        });
         it('should make tail elevated', () => {
-          expect(sut.tailState).not.toEqual(vdog.DogTailState.elevated);
+          sut.tailState = vdog.DogTailState.drooped;
           $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
           expect(sut.tailState).toEqual(vdog.DogTailState.elevated);
         });
         it('should blog sniff', () => {
-          expect(sut.blogContent).not.toContain('sniff');
           $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
           expect(sut.blogContent).toContain('sniff');
         });
         it('should blog tilt', () => {
-          expect(sut.blogContent).not.toContain('tilt');
           $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
           expect(sut.blogContent).toContain('tilt');
         });
       });
     });
-    // todo: need to test thow event
+    describe('masterThrow event listener', () => {
+      let throwObject: vdog.DogObject;
+      beforeEach(() => {
+        throwObject = jasmine.createSpyObj<vdog.DogObject>(
+          'throwObject', ['chewOn']);
+        throwObject.name = 'meh';
+        throwObject.flies = false;
+        throwObject.chewy = false;
+        (<jasmine.Spy>(throwObject.chewOn)).and.returnValue(
+          vdog.ChewExperience.fair);
+      });
+      it('should blog master', () => {
+        $rootScope.$broadcast(vdog.eventNames.masterThrow, throwObject);
+        expect(sut.blogContent).toContain('master');
+      });
+      it('should blog thrown object name', () => {
+        $rootScope.$broadcast(vdog.eventNames.masterThrow, throwObject);
+        expect(sut.blogContent).toContain(throwObject.name);
+      });
+      it('when thrown object does not fly should blog snapping', () => {
+        $rootScope.$broadcast(vdog.eventNames.masterThrow, throwObject);
+        expect(sut.blogContent).toContain('snapping');
+      });
+      it('when thrown object flies should blog leapt', () => {
+        throwObject.flies = true;
+        $rootScope.$broadcast(vdog.eventNames.masterThrow, throwObject);
+        expect(sut.blogContent).toContain('leapt');
+      });
+      it('when thrown object is chewy and not in chewObjects ' +
+        'should add thrown object to chewObjects', () => {
+          throwObject.chewy = true;
+          sut.chewObjects = [];
+          $rootScope.$broadcast(vdog.eventNames.masterThrow, throwObject);
+          expect(sut.chewObjects).toContain(throwObject);
+      });
+      describe('when thrown object chewOn returns squeaky', () => {
+        beforeEach(() => {
+          (<jasmine.Spy>(throwObject.chewOn)).and.returnValue(
+            vdog.ChewExperience.squeaky);
+        });
+        it('should blog squeak', () => {
+          $rootScope.$broadcast(vdog.eventNames.masterThrow, throwObject);
+          expect(sut.blogContent).toContain('squeak');
+        });
+        it('should call chewOn squeakyOcdChewCount+1 times', () => {
+          sut.squeakyOcdChewCount = 5;
+          $rootScope.$broadcast(vdog.eventNames.masterThrow, throwObject);
+          expect(throwObject.chewOn).toHaveBeenCalledTimes(
+            sut.squeakyOcdChewCount + 1);
+        });
+        it('when chewOn stops returning squeaky should blog \'try again\'', 
+          () => {
+            (<jasmine.Spy>(throwObject.chewOn)).and.returnValues(
+              vdog.ChewExperience.squeaky,
+              vdog.ChewExperience.great
+            );
+          sut.squeakyOcdChewCount = 1;
+          $rootScope.$broadcast(vdog.eventNames.masterThrow, throwObject);
+          expect(sut.blogContent).toContain('try again');
+        });
+      });
+    });
   });
 });
