@@ -7,7 +7,6 @@ describe('In the file dogController.ts', () => {
       $controller: ng.IControllerService,
       $interval: ng.IIntervalService,
       dogConfig: vdog.DogConfiguration,
-      //eventNames: vdog.EventNames,
       dogConstructorParams: {
         $rootScope: ng.IRootScopeService;
         $interval: ng.IIntervalService;
@@ -21,11 +20,9 @@ describe('In the file dogController.ts', () => {
       startDog: <vdog.IDog>{},
       version: '0.0.1'
     };
-    //eventNames = vdog.eventNames;
     beforeEach(() => {
       angular.mock.module('app.dog');
       inject(($injector: ng.auto.IInjectorService) => {
-        // we need to construct every time so set up for that
         $controller = $injector.get<ng.IControllerService>('$controller');
         $rootScope = $injector.get<ng.IRootScopeService>('$rootScope');
         $interval = $injector.get<ng.IIntervalService>('$interval');
@@ -34,7 +31,6 @@ describe('In the file dogController.ts', () => {
           $rootScope: $rootScope,
           $interval: $interval,
           dogConfig: dogConfig,
-          // this was changed too
           eventNames: vdog.eventNames
         };
       });
@@ -127,9 +123,9 @@ describe('In the file dogController.ts', () => {
       let foodObject: vdog.DogObject;
       beforeEach(() => {
         foodObject = new vdog.DogObject('meh', false, false);
+        sut.blogContent = '';
       });
       it('should blog master', () => {
-        expect(sut.blogContent).not.toContain('master');
         $rootScope.$broadcast(vdog.eventNames.masterFeed, foodObject);
         expect(sut.blogContent).toContain('master');
       });

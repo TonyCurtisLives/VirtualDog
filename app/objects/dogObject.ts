@@ -42,6 +42,7 @@
       if (!chewy && chewExperience > ChewExperience.fair) {
         chewExperience = ChewExperience.fair;
       }
+      
     }
 
     public getSpitStateText() {
@@ -57,7 +58,7 @@
         this.spitState++;
       }
       if (this.impervious) {
-        return ChewExperience.painful;
+        return this.chewExperience;
       }
       this.monetaryValue /= 2;
       this.expensive = this.monetaryValue > 100;
