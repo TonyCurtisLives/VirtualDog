@@ -42,7 +42,6 @@
       if (!chewy && chewExperience > ChewExperience.fair) {
         chewExperience = ChewExperience.fair;
       }
-      
     }
 
     public getSpitStateText() {

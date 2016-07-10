@@ -200,6 +200,7 @@ describe('In the file dogController.ts', () => {
         throwObject.chewy = false;
         (<jasmine.Spy>(throwObject.chewOn)).and.returnValue(
           vdog.ChewExperience.fair);
+        sut.blogContent = '';
       });
       it('should blog master', () => {
         $rootScope.$broadcast(vdog.eventNames.masterThrow, throwObject);
@@ -240,7 +241,7 @@ describe('In the file dogController.ts', () => {
           expect(throwObject.chewOn).toHaveBeenCalledTimes(
             sut.squeakyOcdChewCount + 1);
         });
-        it('when chewOn stops returning squeaky should blog \'try again\'', 
+        it('then chewOn stops returning squeaky should blog \'try again\'', 
           () => {
             (<jasmine.Spy>(throwObject.chewOn)).and.returnValues(
               vdog.ChewExperience.squeaky,
