@@ -253,5 +253,25 @@ describe('In the file dogController.ts', () => {
         });
       });
     });
+    describe('masterThrow event listener not isolated', () => {
+      let throwObject: vdog.DogObject;
+      beforeEach(() => {
+        throwObject = new vdog.DogObject(
+          'meh', false, false, vdog.ChewExperience.squeaky);
+        sut.blogContent = '';
+      });
+      it('when thrown object chewOn returns squeeky should blog squeaky', () => {
+        $rootScope.$broadcast(vdog.eventNames.masterThrow, throwObject);
+        expect(sut.blogContent).toContain('squeak');
+      });
+      it('when thrown object is chewy and chewon returns fair should not blog squeak', () => {
+        throwObject = new vdog.DogObject('meh', true, false, vdog.ChewExperience.fair);
+        throwObject.chewLimit = 2;
+        throwObject.state = vdog.ObjectState.veryChewed;
+        sut.squeakyOcdChewCount = 5;
+        $rootScope.$broadcast(vdog.eventNames.masterThrow, throwObject);
+        expect(sut.blogContent).not.toContain('squeak');
+      });
+    });
   });
 });

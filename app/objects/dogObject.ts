@@ -40,7 +40,7 @@
       private chewExperience = ChewExperience.good
     ) {
       if (!chewy && chewExperience > ChewExperience.fair) {
-        chewExperience = ChewExperience.fair;
+        this.chewExperience = ChewExperience.fair;
       }
     }
 
@@ -76,7 +76,7 @@
           if (this.chewExperience !== ChewExperience.squeaky
             && this.chewExperience > ChewExperience.fair) {
             this.chewExperience--;
-          } else if (this.chewExperience === ChewExperience.squeaky
+          } else if ((this.chewExperience = ChewExperience.squeaky)
             && this.chewLimit === 0) {
             this.chewExperience = ChewExperience.fair;
           }
