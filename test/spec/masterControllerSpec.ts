@@ -1,6 +1,3 @@
-/// <reference path="../../typings/index.d.ts" />
-import vdog = dogsrus.virtdog;
-
 describe('In the file masterController.ts', () => {
   describe('the MasterController\'s', () => {
     let sut: vdog.MasterController,

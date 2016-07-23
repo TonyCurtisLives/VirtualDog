@@ -14,20 +14,23 @@ namespace dogsrus.virtdog {
     constructor(private roverPhotoDataService: RoverPhotoDataService, private roverConfig: RoverConfig) {
       // since there is a lag on photo upload from Mars (imagine that)
       // get photos from a few weeks ago
-      this.today.setTime(this.today.getTime() - ((24 * 60 * 60 * 1000) * 84));
+      this.today.setTime(this.today.getTime() - ((24 * 60 * 60 * 1000) * 184));
       this.photoDate = this.today.getFullYear().toString() + '-' + (this.today.getMonth() + 1) + '-' + this.today.getDate().toString();
       this.roverCamera = this.roverConfig.camera;
       this.getPhotos(this.roverCamera);
     }
     // todo: interface out the photo object and other objects from rest call
     public getPhotos(currentCamera: string) {
-      this.roverPhotoDataService.getPhotos(this.photoDate, currentCamera).then((data) => {
+      this.roverPhotoDataService.getPhotos(this.photoDate, 0, currentCamera).then((data) => {
         this.photosToDroolOver = (<any>data).photos;
         this.photosToDroolOver.forEach(photo => {
           this.roverPhotoUrl = photo.img_src;
           this.cameras = photo.rover.cameras;
         });
-      }, (reason) => { this.roverError = reason; });
+      }, (reason) => 
+      { 
+        this.roverError = reason; 
+      });
     }
   }
   getModuleRoverPhotos().controller('roverPhotosController', RoverPhotosController);
