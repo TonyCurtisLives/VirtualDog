@@ -16,7 +16,7 @@ namespace dogsrus.virtdog {
       // get photos from a few weeks ago
       this.today.setTime(this.today.getTime() - ((24 * 60 * 60 * 1000) * 184));
       this.photoDate = this.today.getFullYear().toString() + '-' + (this.today.getMonth() + 1) + '-' + this.today.getDate().toString();
-      this.roverCamera = this.roverConfig.camera;
+      this.roverCamera = this.roverConfig.rovers[0].camera;
       this.getPhotos(this.roverCamera);
     }
     // todo: interface out the photo object and other objects from rest call

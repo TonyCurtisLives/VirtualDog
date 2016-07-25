@@ -1,4 +1,4 @@
-namespace dogsrus.virtdog.test {
+namespace dogsrus.virtdogtest {
 export var roverTestDataOpportunity = {
   "photos":
   [
