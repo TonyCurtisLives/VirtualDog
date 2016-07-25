@@ -1,5 +1,3 @@
-namespace dogsrus.virtdogtest {
-  import vdog = virtdog;
 
   describe('brittle tests for RoverPhotoDataService class\'s -----------------' +
     '-------------------------------------------------------------------', () => {
@@ -174,4 +172,3 @@ namespace dogsrus.virtdogtest {
         // });
       });
     });
-}

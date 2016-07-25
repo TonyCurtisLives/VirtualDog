@@ -37,7 +37,7 @@ namespace dogsrus.virtdog {
           // here if we got no photos, can we call again with date - 1?
           if (this.isError(returnData)) {
             error.data = 'INFO: no photos found';
-            error.status = -37;
+            error.status = this.appValues.restStatusNoPhotos;
             return this.$q.reject(error);
           } else {
             return results.data;
@@ -95,7 +95,7 @@ namespace dogsrus.virtdog {
           reject({
             data: 'error: parameter invalid - ' +
             earthDateParams.errors.join(', '),
-            status: -42
+            status: this.appValues.restStatusBadParam
           });
         });
       }
@@ -110,7 +110,7 @@ namespace dogsrus.virtdog {
           if (this.isError(returnData)) {
             return this.$q.reject({
               data: `INFO: no photos found`,
-              status: -37
+              status: this.appValues.restStatusNoPhotos
             });
           } else {
             let translatedData = this.roverPhotoTranslationService
@@ -149,7 +149,7 @@ namespace dogsrus.virtdog {
       if (earthDateParams.errors !== undefined) {
         error.data = 'error: parameter invalid - ' +
           earthDateParams.errors.join(', ');
-        error.status = -42;
+        error.status = this.appValues.restStatusBadParam;
         earthDateParams = null;
       }
       return earthDateParams;

@@ -1,5 +1,4 @@
-namespace dogsrus.virtdogtest {
-export var roverTestData =
+var roverTestData =
   {
     "photos":
     [
@@ -57,5 +56,4 @@ export var roverTestData =
       }
     ]
   };
-}
 

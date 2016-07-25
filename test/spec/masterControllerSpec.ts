@@ -6,13 +6,13 @@ namespace dogsrus.virtdogtest {
       let sut: vdog.MasterController,
         $rootScope: ng.IRootScopeService,
         $controller: ng.IControllerService,
-        eventNamesTest = vdogEvents,
+        eventNames: vdog.EventNames,
         masterControllerParams: {
           $rootScope: ng.IRootScopeService;
         };
       beforeEach(() => {
         angular.mock.module('app.core', ($injector: ng.auto.IInjectorService) => {
-          eventNamesTest = $injector.get<vdog.EventNames>('eventNames');
+          eventNames = $injector.get<vdog.EventNames>('eventNames');
         });
         angular.mock.module('app.people');
         inject(($injector: ng.auto.IInjectorService) => {
@@ -79,14 +79,14 @@ namespace dogsrus.virtdogtest {
           it('should broadcast the throw event name and the object thrown', () => {
             sut.throwSomething(broadcastObject);
             expect($rootScope.$broadcast).toHaveBeenCalledWith(
-              eventNamesTest.masterThrow, broadcastObject);
+              eventNames.masterThrow, broadcastObject);
           });
         });
         describe('feedTheDog', () => {
           it('should broadcast the feed event name and the object fed', () => {
             sut.feedTheDog(broadcastObject);
             expect($rootScope.$broadcast).toHaveBeenCalledWith(
-              eventNamesTest.masterFeed, broadcastObject);
+              eventNames.masterFeed, broadcastObject);
           });
         });
       });
@@ -98,7 +98,7 @@ namespace dogsrus.virtdogtest {
           foodObject = new vdog.DogObject('meh', false, false);
           wasBroadcast = false;
           spyOn($rootScope, '$broadcast');
-          $rootScope.$on(eventNamesTest.masterFeed, (event, args) => wasBroadcast = true);
+          $rootScope.$on(eventNames.masterFeed, (event, args) => wasBroadcast = true);
         });
         describe('and there is no callThrough', () => {
           it('should not broadcast', () => {

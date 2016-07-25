@@ -1,6 +1,4 @@
-namespace dogsrus.virtdogtest {
 
-  import vdog = virtdog;
   describe('in the file roverPhotoDataService.ts the ' +
     'RoverPhotoDataService class\'s', () => {
       let sut: vdog.RoverPhotoDataService,
@@ -350,4 +348,3 @@ namespace dogsrus.virtdogtest {
         });
       });
     });
-}

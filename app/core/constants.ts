@@ -63,7 +63,7 @@
   };
   export type DogPlaces = typeof dogPlaces;
 
-  var appValues = {
+  export var appValues = {
     restStatusBadParam: -42,
     restStatusNoPhotos: -37,
     restStatusBadRover: -7
