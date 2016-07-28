@@ -47,7 +47,8 @@ namespace dogsrus.virtdog {
         });
     }
 
-    public getTranslatedPhotos(earthDate = this.roverConfig.defaultRover.minPhotoDate,
+    public getTranslatedPhotos(
+      earthDate = this.roverConfig.defaultRover.minPhotoDate,
       page = 0, camera = ''): ng.IPromise<DogRover> {
       let earthDateParams = this.roverParamValidationService
         .validateParamsPage(earthDate, page, camera);
@@ -64,7 +65,9 @@ namespace dogsrus.virtdog {
         params: earthDateParams
       };
 
-      return this.$http.get(this.roverConfig.defaultRover.roverUrl, roverHttpConfig).then(
+      return this.$http.get(
+        this.roverConfig.defaultRover.roverUrl, roverHttpConfig)
+        .then(
         (results: ng.IHttpPromiseCallbackArg<IRestPhotos | IRestError>) => {
           let returnData = results.data;
           // here if we got no photos, can we call again with date - 1?
@@ -83,9 +86,6 @@ namespace dogsrus.virtdog {
         });
     }
 
-    // this should query by rover name and not care about camera name
-    // and should keep going backwards a day if no photos till it gets 
-    // the cameras for that rover?
     public getTranslatedCameras(
       earthDate = this.roverConfig.defaultRover.minPhotoDate): ng.IPromise<DogCamera[]> {
       let earthDateParams = this.roverParamValidationService
@@ -154,17 +154,6 @@ namespace dogsrus.virtdog {
       }
       return earthDateParams;
     }
-    // private getRover(roverName: string): Rover {
-    //   let roverByName: Rover;
-    //   let roversFiltered = this.roverConfig.rovers.filter(
-    //     (rover, i, rovers) => { return rover.roverName === roverName; });
-    //   if (roversFiltered.length !== 1) {
-    //     roverByName = null;
-    //   } else {
-    //     roverByName = roversFiltered[0];
-    //   }
-    //   return roverByName;
-    // }
 
     // typeguard - since rest returns {"errors":"No Photos Found"}
     private isError(
