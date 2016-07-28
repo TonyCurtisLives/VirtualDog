@@ -1,9 +1,8 @@
 describe('in the file roverPhotoDataService.ts', () => {
 
   let sut: vdog.RoverPhotoDataService,
-    spyValidationService: vdog.RoverParamValidationService,
+    spyValidationService: vdog.RoverParamValidationService,// FORMAT CODE
     spyTranslateService: vdog.RoverPhotoTranslationService,
-    // by default these will return config values
     httpBackend: ng.IHttpBackendService,
     stubHttpRequestHandler: ng.mock.IRequestHandler,
     // config objects 
@@ -11,10 +10,9 @@ describe('in the file roverPhotoDataService.ts', () => {
     vdogConfig: vdog.RoverConfig,
     // for digest and other useful things
     rootScope: ng.IRootScopeService,
-    // handy test data varaibles
+    // lots of handy test varaibles
     vdogRover: vdog.Rover,
     httpPhotoData: vdog.IRestPhotos,
-    // by default will return config values
     validatedDateParam: {
       api_key: string,
       earth_date: string
@@ -23,14 +21,13 @@ describe('in the file roverPhotoDataService.ts', () => {
     httpNoPhotos: vdog.IRestError = { errors: 'No Photos Found' };
 
   beforeEach(() => {
-    // fake / stub values
     spyTranslateService = jasmine.createSpyObj(
       'spyTranslateService', ['translateCameraList', 'translateAllPhotos']
-    );
+    );// FORMAT CODE
     spyValidationService = jasmine.createSpyObj(
       'spyValidationService', ['validateParams', 'validateParamsPage']
     );
-  });// FORMAT CODE
+  });
   describe('when using the default application configuration' +
     'the RoverPhotoDataService class\'s', () => {
 
@@ -38,7 +35,7 @@ describe('in the file roverPhotoDataService.ts', () => {
         api_key: string,
         camera: string,
         earth_date: string
-      },
+      },// FORMAT CODE
         validatedDatePageCameraParam: {
           api_key: string,
           camera: string,
@@ -49,31 +46,31 @@ describe('in the file roverPhotoDataService.ts', () => {
         restValidDateParam = '2012-12-12',
         restValidCameraParam = 'FHAZ',
         restValidPageParam = 2,
-        httpStatusServer = 500;
-// FORMAT CODE
+        httpStatusServer = 500;// FORMAT CODE
+
       beforeEach(() => {
         // inject spys
         angular.mock.module('app.core', ($provide: ng.auto.IProvideService) => {
-          $provide.value('roverPhotoTranslationService', spyTranslateService);
+          $provide.value('roverPhotoTranslationService', spyTranslateService);// FORMAT CODE
           $provide.value('roverParamValidationService', spyValidationService);
         });
-        // getting instances from angular
+        // get instances from angular
         inject(($httpBackend, roverPhotoDataService, $rootScope,
           roverConfig, appValues) => {
-          httpBackend = $httpBackend;
+          httpBackend = $httpBackend;// FORMAT CODE
           rootScope = $rootScope;
           sut = roverPhotoDataService;
           // grab real config values
           vdogConfig = roverConfig;
           vdogApp = appValues;
         });
-        vdogRover = vdogConfig.defaultRover;
-// FORMAT CODE
+        vdogRover = vdogConfig.defaultRover;// FORMAT CODE
+
         (<jasmine.Spy>spyValidationService.validateParams).and
           .returnValue(validatedDateParam);
 
-        // override this return value for additional returned parameters
-        // available for http calls including camera and/or page
+        // replace this return test var for added params
+        // like camera and/or page
         (<jasmine.Spy>spyValidationService.validateParamsPage).and
           .returnValue(validatedDateParam);
 
@@ -102,7 +99,7 @@ describe('in the file roverPhotoDataService.ts', () => {
         stubHttpRequestHandler.respond(httpPhotoData);
 
       });
-// FORMAT CODE
+
       // -----getTranslatedCameras------
       describe('getTranslatedCameras', () => {
 
