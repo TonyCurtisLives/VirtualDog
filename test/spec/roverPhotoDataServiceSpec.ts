@@ -224,9 +224,7 @@ describe('in the file roverPhotoDataService.ts', () => {
           });
       });
       //});
-      //});
       //});// FORMAT CODE
-      // PAUSE PAUSE PAUSE
       // getTranslatedPhotos --------------------------------------------------      
       describe('getTranslatedPhotos', () => {
 
