@@ -3,6 +3,7 @@ namespace dogsrus.virtdog {
     data: string;
     status: number;
   }
+  
   export class RoverPhotoDataService {
     static $inject = ['$http', 'roverConfig', 'appValues',
       'roverPhotoTranslationService', 'roverParamValidationService', '$q'];
@@ -13,6 +14,44 @@ namespace dogsrus.virtdog {
       private roverParamValidationService: RoverParamValidationService,
       private $q: ng.IQService
     ) { }
+
+    public getTranslatedCameras(
+      earthDate = this.roverConfig.defaultRover.minPhotoDate): ng.IPromise<DogCamera[]> {
+      let earthDateParams = this.roverParamValidationService
+        .validateParams(earthDate);
+      if (earthDateParams.errors !== undefined) {
+        return this.$q((resolve: ng.IHttpPromiseCallbackArg<any>, reject) => {
+          reject({
+            data: 'error: parameter invalid - ' +
+            earthDateParams.errors.join(', '),
+            status: this.appValues.restStatusBadParam
+          });
+        });
+      }
+      let roverHttpConfig: ng.IRequestShortcutConfig = {
+        params: earthDateParams
+      };
+
+      return this.$http.get(this.roverConfig.defaultRover.roverUrl, roverHttpConfig).then(
+        (results: ng.IHttpPromiseCallbackArg<IRestPhotos | IRestError>) => {
+          let returnData = results.data;
+          // here if we got no photos, can we call again with date - 1?
+          if (this.isError(returnData)) {
+            return this.$q.reject({
+              data: `INFO: no photos found`,
+              status: this.appValues.restStatusNoPhotos
+            });
+          } else {
+            let translatedData = this.roverPhotoTranslationService
+              .translateCameraList<IRestPhotos, DogCamera>(
+              { photos: [returnData.photos[0]] });
+            return translatedData;
+          }
+        }, (error: ng.IHttpPromiseCallbackArg<any>) => {
+          return this.$q.reject(error);
+        });
+    }
+
     public getPhotos(earthDate = this.roverConfig.defaultRover.minPhotoDate,
       page = 0, camera = '', roverName = ''): ng.IPromise<IRestPhotos> {
       let error = <IPromiseError>{};
@@ -79,43 +118,6 @@ namespace dogsrus.virtdog {
           } else {
             let translatedData = this.roverPhotoTranslationService
               .translateAllPhotos<IRestPhotos, DogRover>(returnData);
-            return translatedData;
-          }
-        }, (error: ng.IHttpPromiseCallbackArg<any>) => {
-          return this.$q.reject(error);
-        });
-    }
-
-    public getTranslatedCameras(
-      earthDate = this.roverConfig.defaultRover.minPhotoDate): ng.IPromise<DogCamera[]> {
-      let earthDateParams = this.roverParamValidationService
-        .validateParams(earthDate);
-      if (earthDateParams.errors !== undefined) {
-        return this.$q((resolve: ng.IHttpPromiseCallbackArg<any>, reject) => {
-          reject({
-            data: 'error: parameter invalid - ' +
-            earthDateParams.errors.join(', '),
-            status: this.appValues.restStatusBadParam
-          });
-        });
-      }
-      let roverHttpConfig: ng.IRequestShortcutConfig = {
-        params: earthDateParams
-      };
-
-      return this.$http.get(this.roverConfig.defaultRover.roverUrl, roverHttpConfig).then(
-        (results: ng.IHttpPromiseCallbackArg<IRestPhotos | IRestError>) => {
-          let returnData = results.data;
-          // here if we got no photos, can we call again with date - 1?
-          if (this.isError(returnData)) {
-            return this.$q.reject({
-              data: `INFO: no photos found`,
-              status: this.appValues.restStatusNoPhotos
-            });
-          } else {
-            let translatedData = this.roverPhotoTranslationService
-              .translateCameraList<IRestPhotos, DogCamera>(
-              { photos: [returnData.photos[0]] });
             return translatedData;
           }
         }, (error: ng.IHttpPromiseCallbackArg<any>) => {
