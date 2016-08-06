@@ -1,7 +1,7 @@
-/* MACROFY SKIP START */describe('in the file roverPhotoDataService.ts', () => {
+describe('in the file roverPhotoDataService.ts', () => {
 
   let sut: vdog.RoverPhotoDataService,
-    spyValidationService: vdog.RoverParamValidationService,// FORMAT CODE
+    spyValidationService: vdog.RoverParamValidationService,
     spyTranslateService: vdog.RoverPhotoTranslationService,
     httpBackend: ng.IHttpBackendService,
     stubHttpRequestHandler: ng.mock.IRequestHandler,
@@ -23,19 +23,19 @@
   beforeEach(() => {
     spyTranslateService = jasmine.createSpyObj(
       'spyTranslateService', ['translateCameraList', 'translateAllPhotos']
-    );// FORMAT CODE
+    );
     spyValidationService = jasmine.createSpyObj(
       'spyValidationService', ['validateParams', 'validateParamsPage']
     );
   });
-  describe('when using the default application configuration' +
+  describe('when using the default application configuration ' +
     'the RoverPhotoDataService class\'s', () => {
 
       let validatedDateCameraParam: {
         api_key: string,
         camera: string,
         earth_date: string
-      },// FORMAT CODE
+      },
         validatedDatePageCameraParam: {
           api_key: string,
           camera: string,
@@ -46,31 +46,31 @@
         restValidDateParam = '2012-12-12',
         restValidCameraParam = 'FHAZ',
         restValidPageParam = 2,
-        httpStatusServer = 500;// FORMAT CODE
+        httpStatusServer = 500;
 
       beforeEach(() => {
         // inject spys
         angular.mock.module('app.core', ($provide: ng.auto.IProvideService) => {
-          $provide.value('roverPhotoTranslationService', spyTranslateService);// FORMAT CODE
+          $provide.value('roverPhotoTranslationService', spyTranslateService);
           $provide.value('roverParamValidationService', spyValidationService);
         });
         // get instances from angular
         inject(($httpBackend, roverPhotoDataService, $rootScope,
           roverConfig, appValues) => {
-          httpBackend = $httpBackend;// FORMAT CODE
+          httpBackend = $httpBackend;
           rootScope = $rootScope;
-          sut = roverPhotoDataService;// PAUSE PAUSE PAUSE
+          sut = roverPhotoDataService;
           // grab real config values
           vdogConfig = roverConfig;
           vdogApp = appValues;
         });
-        vdogRover = vdogConfig.defaultRover;// PAUSE PAUSE PAUSE
+        vdogRover = vdogConfig.defaultRover;
 
         // generally need valid data from validator
         validatedDateParam = {
           api_key: vdogConfig.apiKey,
           earth_date: vdogRover.minPhotoDate
-        };// FORMAT CODE
+        };
         validatedDateCameraParam = {
           api_key: vdogConfig.apiKey,
           camera: vdogRover.camera,
@@ -89,7 +89,7 @@
         // replace this return test var for added params
         // like camera and/or page
         (<jasmine.Spy>spyValidationService.validateParamsPage).and
-          .returnValue(validatedDateParam);// FORMAT CODE
+          .returnValue(validatedDateParam);
 
         // setup backend definition to intercept ALL http calls
         stubHttpRequestHandler = httpBackend.whenGET(/.*/);
@@ -98,28 +98,28 @@
         httpPhotoData = roverTestData;
         stubHttpRequestHandler.respond(httpPhotoData);
 
-      });// MACROFY SKIP END
+      });
 
       // -----getTranslatedCameras------
       describe('getTranslatedCameras', () => {
 
         it('when earthDate is passed should call param validator with ' +
-          'earthDate', () => {// FORMAT CODE
+          'earthDate', () => {
 
             sut.getTranslatedCameras(restValidDateParam);
             httpBackend.flush();
 
             expect(spyValidationService.validateParams)
-              .toHaveBeenCalledWith(restValidDateParam);// FORMAT CODE
+              .toHaveBeenCalledWith(restValidDateParam);
           });
         it('when earthDate is not passed should call param validator with ' +
-          'default minPhotoDate', () => {// FORMAT CODE
+          'default minPhotoDate', () => {
 
             sut.getTranslatedCameras();
             httpBackend.flush();
 
             expect(spyValidationService.validateParams)
-              .toHaveBeenCalledWith(vdogRover.minPhotoDate);// FORMAT CODE
+              .toHaveBeenCalledWith(vdogRover.minPhotoDate);
           });
         describe('when param validator returns error for earthDate', () => {
 
@@ -129,11 +129,11 @@
             wasHttpCalled = false;
             (<jasmine.Spy>spyValidationService.validateParams).and.returnValue(
               { errors: [`earth_date: ${restInvalidDateParam}`] });
-            stubHttpRequestHandler.respond({ meh: 0 });// FORMAT CODE
+            stubHttpRequestHandler.respond({ meh: 0 });
             sut.getTranslatedCameras('meh').then(
               (response) => { wasHttpCalled = true; },
               (error) => { errorData = error; });
-            rootScope.$digest();// FORMAT CODE
+            rootScope.$digest();
           });
           it('should return error status of -42', () => {
 
@@ -152,17 +152,17 @@
             httpBackend.verifyNoOutstandingRequest();
             expect(wasHttpCalled).toBeFalsy();
           });
-        });// FORMAT CODE
+        });
         describe('when http returns invalid response with status of 500', () => {
 
           let errorData: ng.IHttpPromiseCallbackArg<any>;
           beforeEach(() => {
-            stubHttpRequestHandler.respond(httpStatusServer, '');// FORMAT CODE
+            stubHttpRequestHandler.respond(httpStatusServer, '');
             sut.getTranslatedCameras('meh').then(
               (response) => { }, (error) => { errorData = error; });
             httpBackend.flush();
             rootScope.$digest();
-          });// FORMAT CODE
+          });
           it('should return status of 500', () => {
 
             expect(errorData.status).toEqual(httpStatusServer);
@@ -172,9 +172,9 @@
             expect(spyTranslateService.translateCameraList)
               .not.toHaveBeenCalled();
           });
-        });// FORMAT CODE
+        });
         describe('when http returns valid response with ' +
-          '"errors":"No Photos Found"', () => {// FORMAT CODE
+          '"errors":"No Photos Found"', () => {
 
             let errorData: ng.IHttpPromiseCallbackArg<any>;
             beforeEach(() => {
@@ -194,9 +194,9 @@
               expect(spyTranslateService.translateCameraList)
                 .not.toHaveBeenCalled();
             });
-          });// FORMAT CODE
+          });
         it('when http returns valid response ' +
-          'should call translator', () => {// FORMAT CODE
+          'should call translator', () => {
 
             sut.getTranslatedCameras('meh');
             httpBackend.flush();
@@ -205,23 +205,133 @@
               .toHaveBeenCalled();
           });
         it('when http returns valid response ' +
-          'should return cameras recieved from translator', () => {// FORMAT CODE
+          'should return cameras recieved from translator', () => {
             let translatedCameras = new Array<vdog.DogCamera>();
             let responseData: vdog.DogCamera[] | any;
 
             translatedCameras.push(
-              new vdog.DogCamera(new vdog.DogRover(), 'testcam', 'longtest'));// FORMAT CODE
+              new vdog.DogCamera(new vdog.DogRover(), 'testcam', 'longtest'));
             translatedCameras.push(
-              new vdog.DogCamera(new vdog.DogRover(), 'test2', 'testLong2'));// FORMAT CODE
+              new vdog.DogCamera(new vdog.DogRover(), 'test2', 'testLong2'));
             (<jasmine.Spy>spyTranslateService.translateCameraList).and
-              .returnValue(translatedCameras);// FORMAT CODE
+              .returnValue(translatedCameras);
 
             sut.getTranslatedCameras('meh')
-              .then((response) => { responseData = response; });// FORMAT CODE
+              .then((response) => { responseData = response; });
             httpBackend.flush();
 
             expect(responseData).toBe(translatedCameras);
           });
       });
     });
-});// FORMAT CODE
+  describe('when using a CUSTOM application configuration ' +
+    'the RoverPhotoDataService class\'s', () => {
+
+      vdogConfig = {
+        apiKey: 'meh',
+        defaultRover: null,
+        paramKeyApiKey: 'meh',
+        paramKeyCamera: 'meh',
+        paramKeyEarthDate: 'meh',
+        paramKeyError: 'meh',
+        paramKeyPage: 'meh',
+        rovers: [{
+          alternateUrl: 'meh',
+          camera: 'meh',
+          cameraList: 'meh',
+          maxPageNumber: 0,
+          maxPhotoDateOffset: 0,
+          minPhotoDate: '4242-4-2',
+          roverName: 'meh',
+          roverUrl: 'meh'
+        }]
+      };
+      vdogConfig.defaultRover = vdogConfig.rovers[0];
+
+      vdogApp = {
+        restStatusBadParam: -9429,
+        restStatusNoPhotos: -8428,
+        restStatusBadRover: 0
+      };
+      beforeEach(() => {
+        angular.mock.module('app.core', ($provide: ng.auto.IProvideService) => {
+          $provide.value('roverPhotoTranslationService', spyTranslateService);
+          $provide.value('roverParamValidationService', spyValidationService);
+          $provide.value('roverConfig', vdogConfig);
+          $provide.value('vdogApp', vdogApp);
+
+        });
+
+        // getting instances from angular
+        inject(($httpBackend, roverPhotoDataService, $rootScope,
+          roverConfig, appValues) => {
+          httpBackend = $httpBackend;
+          rootScope = $rootScope;
+          sut = roverPhotoDataService;
+        });
+        vdogRover = vdogConfig.defaultRover;
+        validatedDateParam = {
+          api_key: vdogConfig.apiKey,
+          earth_date: vdogRover.minPhotoDate
+        };
+
+        (<jasmine.Spy>spyValidationService.validateParams).and
+          .returnValue(validatedDateParam);
+
+        // setup backend definition to intercept ALL http calls
+        stubHttpRequestHandler = httpBackend.whenGET(/.*/);
+
+        // generally need valid photo data from http response
+        httpPhotoData = roverTestData;
+        stubHttpRequestHandler.respond(httpPhotoData);
+
+      });
+      describe('getTranslatedCameras', () => {
+        it('when earthDate is not passed should call param validator with ' +
+          'custom configuration minPhotoDate', () => {
+
+            sut.getTranslatedCameras();
+            httpBackend.flush();
+
+            expect(spyValidationService.validateParams)
+              .toHaveBeenCalledWith(vdogRover.minPhotoDate);
+          });
+        describe('when param validator returns error for earthDate', () => {
+
+          let errorData: ng.IHttpPromiseCallbackArg<any>;
+          let wasHttpCalled: boolean;
+          beforeEach(() => {
+            wasHttpCalled = false;
+            (<jasmine.Spy>spyValidationService.validateParams).and.returnValue(
+              { errors: [`earth_date: ${restInvalidDateParam}`] });
+            stubHttpRequestHandler.respond({ meh: 0 });
+            sut.getTranslatedCameras('meh').then(
+              (response) => { wasHttpCalled = true; },
+              (error) => { errorData = error; });
+            rootScope.$digest();
+          });
+          it('should return error custom configuration status', () => {
+
+            expect(errorData.status).toEqual(vdogApp.restStatusBadParam);
+          });
+        });
+        describe('when http returns valid response with ' +
+          '"errors":"No Photos Found"', () => {
+
+            let errorData: ng.IHttpPromiseCallbackArg<any>;
+            beforeEach(() => {
+              stubHttpRequestHandler.respond(httpNoPhotos);
+              sut.getTranslatedCameras('meh').then(
+                (response) => { },
+                (error) => { errorData = error; });
+              httpBackend.flush();
+              rootScope.$digest();
+            });
+            it('should return custom configuration status', () => {
+
+              expect(errorData.status).toBe(vdogApp.restStatusNoPhotos);
+            });
+          });
+      });
+    });
+});

@@ -36,7 +36,7 @@
     cameraList: '|FHAZ|RHAZ|MAST|CHEMCAM|MAHLI|MARDI|NAVCAM|',
     maxPageNumber: 149,
     maxPhotoDateOffset: 30,
-    minPhotoDate: '2012-8-6',
+    minPhotoDate: '2012-08-06',
     roverName: 'curiosity',
     roverUrl: 'http://localhost:8200/mars-photos/api/v1/rovers/curiosity/photos'
   };
@@ -52,6 +52,17 @@
       paramKeyPage: 'page',
       rovers: new Array(defaultRoverUnit)
     };
+  
+  roverConfig.rovers.push({
+    alternateUrl: 'https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos',
+    camera: 'PANCAM',
+    cameraList: '|FHAZ|RHAZ|PANCAM|MINITES|NAVCAM|',
+    maxPageNumber: 100,
+    maxPhotoDateOffset: 7,
+    minPhotoDate: '2004-01-26',
+    roverName: 'opportunity',
+    roverUrl: 'http://localhost:8200/mars-photos/api/v1/rovers/opportunity/photos'
+  });
   export type RoverConfig = typeof roverConfig;
 
   var dogPlaces = {
