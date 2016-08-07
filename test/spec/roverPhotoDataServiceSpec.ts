@@ -1,4 +1,4 @@
-/* MACROFY SKIP START */describe('in the file roverPhotoDataService.ts', () => {
+describe('in the file roverPhotoDataService.ts', () => {
 
   let sut: vdog.RoverPhotoDataService,
     spyValidationService: vdog.RoverParamValidationService,
@@ -152,33 +152,33 @@
             httpBackend.verifyNoOutstandingRequest();
             expect(wasHttpCalled).toBeFalsy();
           });
-        });// MACROFY SKIP END
+        });
         describe('when param validator returns valid parameters with ' +
           'earth_date and api_key', () => {
 
-            let actualUrl: string;// MACROFY FORMAT
+            let actualUrl: string;
             beforeEach(() => {
               actualUrl = '';
               httpBackend.expectGET((url) => { actualUrl = url; return true; });
               sut.getTranslatedCameras('meh');
               httpBackend.flush();
-            });// MACROFY FORMAT
+            });
             it('should send base url from config to $http', () => {
 
               expect(actualUrl).toMatch(new RegExp(
                 `^${vdogConfig.defaultRover.roverUrl}.*`));
-            });// MACROFY FORMAT
+            });
             it('should send earth_date parameter from validator to $http', () => {
 
               expect(actualUrl).toMatch(new RegExp(
                 `.*earth_date=${validatedDateParam.earth_date}.*`));
-            });// MACROFY FORMAT
+            });
             it('should send api_key parameter from validator to $http', () => {
 
               expect(actualUrl).toMatch(new RegExp(
                 `.*api_key=${validatedDateParam.api_key}.*`));
-            });// MACROFY FORMAT
-          });// MACROFY PAUSE// MACROFY SKIP START
+            });
+          });
         describe('when http returns invalid response with status of 500', () => {
 
           let errorData: ng.IHttpPromiseCallbackArg<any>;
@@ -825,32 +825,33 @@
             (<jasmine.Spy>spyValidationService.validateParams).and.returnValue(
               { errors: [`earth_date: ${restInvalidDateParam}`] });
             sut.getTranslatedCameras('meh').then(
-               (response) => { wasHttpCalled = true; },
-               (error) => { errorData = error; });
+              (response) => { wasHttpCalled = true; },
+              (error) => { errorData = error; });
             rootScope.$digest();
           });
           it('should return error custom configuration status', () => {
 
             expect(errorData.status).toEqual(vdogApp.restStatusBadParam);
           });
-        });// MACROFY SKIP END
+        });
         describe('when param validator returns valid parameters with ' +
           'earth_date and api_key', () => {
 
-            let actualUrl: string;// MACROFY FORMAT
+            let actualUrl: string;
             beforeEach(() => {
               actualUrl = '';
               // use expectGET to grab url
               httpBackend.expectGET((url) => { actualUrl = url; return true; });
               sut.getTranslatedCameras('meh');
               httpBackend.flush();
-            });// MACROFY FORMAT
+            });
             it('should send url matching configuration value to $http', () => {
 
               expect(actualUrl).toMatch(new RegExp(
                 `^${vdogRover.roverUrl}.*`));
-            });// MACROFY FORMAT
-          });// MACROFY SKIP START
+            });
+          });
+
         describe('when http returns valid response with ' +
           '"errors":"No Photos Found"', () => {
 
