@@ -178,16 +178,16 @@
               expect(actualUrl).toMatch(new RegExp(
                 `.*api_key=${validatedDateParam.api_key}.*`));
             });
-          });// MACROFY SKIP END
+          });
         it('using simpler method -- when param validator returns valid params, ' +
-          'should send base url from config to $http', () => {// MACROFY FORMAT
+          'should send base url from config to $http', () => {
             httpBackend.expectGET(new RegExp(
-              `^${vdogConfig.defaultRover.roverUrl}.*`));// MACROFY FORMAT
+              `^${vdogConfig.defaultRover.roverUrl}.*`));
             sut.getTranslatedCameras('meh');
             httpBackend.flush();
             httpBackend.verifyNoOutstandingExpectation();
             httpBackend.verifyNoOutstandingRequest();
-          });// MACROFY FORMAT//MACROFY SKIP START
+          });
         describe('when http returns invalid response with status of 500', () => {
 
           let errorData: ng.IHttpPromiseCallbackArg<any>;
