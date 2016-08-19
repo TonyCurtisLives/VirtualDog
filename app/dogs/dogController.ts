@@ -188,7 +188,7 @@ namespace dogsrus.virtdog {
         'Ok this is way too much fun!!!';
       for (let i = 0; i < this.squeakyOcdChewCount; i++) {
         if (chewObject.chewOn() === ChewExperience.squeaky) {
-          blogEntry += ' Chomp, SQEAK!';
+          blogEntry += ' Chomp, SQUEAK!';
         } else {
           blogEntry += ' Chomp... Hey it stopped squeaking, let me try again!';
         }
