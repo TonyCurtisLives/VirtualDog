@@ -1,4 +1,4 @@
-/* MACROFY SKIP START */describe('in the file roverPhotoDataService.ts', () => {
+describe('in the file roverPhotoDataService.ts', () => {
 
   let sut: vdog.RoverPhotoDataService,
     spyValidationService: vdog.RoverParamValidationService,
@@ -28,7 +28,7 @@
       'spyValidationService', ['validateParams', 'validateParamsPage']
     );
   });
-  describe('when using the default application configuration' +
+  describe('when using the default application configuration ' +
     'the RoverPhotoDataService class\'s', () => {
 
       let validatedDateCameraParam: {
@@ -776,7 +776,7 @@
           $provide.value('roverPhotoTranslationService', spyTranslateService);
           $provide.value('roverParamValidationService', spyValidationService);
           $provide.value('roverConfig', vdogConfig);
-          $provide.value('vdogApp', spyValidationService);
+          $provide.value('vdogApp', vdogApp);
 
         });
 
@@ -881,4 +881,3 @@
       });
     });
 });
-// MACROFY SKIP END

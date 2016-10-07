@@ -17,7 +17,7 @@ namespace dogsrus.virtdog {
 
     public getTranslatedCameras(
       earthDate = this.roverConfig.defaultRover.minPhotoDate): ng.IPromise<DogCamera[]> {
-      if (earthDate) {return;}
+      //if (earthDate) {return;}
       let earthDateParams = this.roverParamValidationService
         .validateParams(earthDate);
       if (earthDateParams.errors !== undefined) {

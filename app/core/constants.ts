@@ -32,7 +32,7 @@
 
   let defaultRoverUnit = {
     alternateUrl: 'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos',
-    camera: 'MAST',
+    camera: 'FHAZ',
     cameraList: '|FHAZ|RHAZ|MAST|CHEMCAM|MAHLI|MARDI|NAVCAM|',
     maxPageNumber: 149,
     maxPhotoDateOffset: 30,
