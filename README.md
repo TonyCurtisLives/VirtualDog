@@ -1,5 +1,9 @@
 # VirtualDog
-An easy to grasp example for training on various web technologies
+## An easy to grasp example for training on various web technologies
+
+### Use the **feature/begin** and **feature/end** branches to follow along with the [Pluralsight course here](https://www.pluralsight.com/courses/javascript-jasmine-typescript) 
+
+To get started go to your fork directory in a command prompt and do this:
 
 ```
 npm install
@@ -11,7 +15,7 @@ Since you want to use the local version of stuff (e.g. typescript, typings, etc)
 - Fail if you don’t have the node module installed globally, 
 - Or if you do have it installed globally, it will run the global version which may be different than the local version used in this project.
 
-Instead do this:
+Instead do this (as needed):
 ```
 npm run tsc 
 npm run tsc -- -w
