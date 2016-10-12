@@ -1,0 +1,22 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+  // -------------------- for automation only ------------------------------
+  // Controls if suggestions should be accepted 'Enter' - in addition to 'Tab'. Helps to avoid ambiguity between inserting new lines or accepting suggestions.
+  // "editor.acceptSuggestionOnEnter": false,
+  // Controls if the editor should automatically close brackets after opening them
+  // "editor.autoClosingBrackets": false,
+  // Controls the delay in ms after which quick suggestions will show up
+  //"editor.quickSuggestionsDelay": 5,
+  // -------------------- for automation only ------------------------------
+  // -------------------- for presentation ------------------------------
+  //"editor.fontSize": 14,
+  //"editor.rulers": [
+  //  80
+  //],
+  //"window.zoomLevel": 2,
+  // -------------------- for presentation ------------------------------
+  "files.exclude": {
+    "app/**/*.js": true,
+    "test/**/*.js": true
+  }
+}
