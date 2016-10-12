@@ -5,3 +5,5 @@ typings/
 app/**/*.js
 server/**/*.js
 test/**/*.js
+.vscode/settings.json
+*.diff

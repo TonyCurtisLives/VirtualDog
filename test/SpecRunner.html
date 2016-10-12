@@ -1,38 +1,41 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
-  <title>Jasmine Spec Runner v2.2.0</title>
+  <title>Jasmine Spec Runner</title>
 
   <link rel="shortcut icon" type="image/png" href="../node_modules/jasmine-core/images/jasmine_favicon.png">
   <link rel="stylesheet" href="../node_modules/jasmine-core/lib/jasmine-core/jasmine.css">
 
+  <!-- include jasmine libs here -->
   <script src="../node_modules/jasmine-core/lib/jasmine-core/jasmine.js"></script>
   <script src="../node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js"></script>
   <script src="../node_modules/jasmine-core/lib/jasmine-core/boot.js"></script>
 
-  <!-- include source files here... -->
-  <!-- vendor.js -->
+  <!-- include bower and node_mobules here... -->
   <script src="../bower_components/angular/angular.js"></script>
   <script src="../bower_components/angular-route/angular-route.js"></script>
   <script src="../node_modules/angular-mocks/angular-mocks.js"></script>
+
   <!-- core modules -->
   <script src="../app/core/core.module.js"></script>
   <script src="../app/dogs/idog.js"></script>
   <script src="../app/core/config.js"></script>
   <script src="../app/core/constants.js"></script>
-  <!--<script src="../app/core/tunesDataService.js"></script>-->
+
   <!-- dogs and other animals (but not rabbits) -->
   <script src="../app/objects/dogObject.module.js"></script>
   <script src="../app/objects/dogObject.js"></script>
   <script src="../app/dogs/dog.module.js"></script>
   <script src="../app/dogs/dogController.js"></script>
+  <script src="../app/people/people.module.js"></script>
+  <script src="../app/people/masterController.js"></script>
 
   <!-- include spec files here... -->
-  <script src="spec/dogObjectSpec.js"></script>
-  <script src="spec/dogControllerSpec.js"></script>
-  <!--<script src="spec/tunesDataServiceSpec.js"></script>-->
 </head>
+
 <body>
 </body>
+
 </html>
