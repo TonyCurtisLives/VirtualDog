@@ -55,6 +55,7 @@ describe('In the file dogController.ts', () => {
       dogConfig.startDog.tailStyle = 'testTailStyle';
       sut = $controller<vdog.DogController>('dogController', dogConstructorParams);
     });
+    
     describe('constructor', () => {
       it('should set barkSound', () => {
         expect(sut.barkSound).toEqual(dogConfig.startDog.barkSound);
