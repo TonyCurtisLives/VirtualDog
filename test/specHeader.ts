@@ -1,2 +1,2 @@
 /// <reference path="../typings/index.d.ts" />
-let vdog = dogsrus.virtdog;
+import vdog = dogsrus.virtdog;
