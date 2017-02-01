@@ -15,8 +15,7 @@ namespace toeknee.cors {
     }
 
     public startServer() {
-      this.server.listen(8200);
-      console.log('Server running at ' + this.server.localAddress + ':' + this.server.localPort);
+      this.server.listen(8200, () => console.log('Opened server on localhost:' + this.server.address().port));
     }
 
     private initiate() {
@@ -66,9 +65,9 @@ namespace toeknee.cors {
           resolve(data);
         });
 
-        req.on('requestTimeout', function (req) {
+        req.on('requestTimeout', function (reqTo) {
           console.log('request has expired');
-          req.abort();
+          reqTo.abort();
           reject('request expired');
         });
 

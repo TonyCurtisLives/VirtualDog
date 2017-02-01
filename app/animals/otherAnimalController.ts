@@ -11,8 +11,8 @@
 
     public performAction() {
       // in future may keep track of last action so we can respond back and forth
-      this.lastAction = (<any>this.selectedAnimal).defaultAction;
-      this.$rootScope.$broadcast((<any>this.selectedAnimal).defaultAction, this.selectedAnimal);
+      this.lastAction = this.selectedAnimal.defaultAction;
+      this.$rootScope.$broadcast(this.selectedAnimal.defaultAction, this.selectedAnimal);
     }
 
     private intializeAnimalList(eventNames: EventNames) {
@@ -37,7 +37,5 @@
       this.performAction = this.performAction.bind(this);
     }
   }
-  (() => {
-    dogsrus.virtdog.getModuleOtherAnimal().controller('otherAnimalController', OtherAnimalController);
-  })();
+  getModuleOtherAnimal().controller('otherAnimalController', OtherAnimalController);
 }

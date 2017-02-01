@@ -7,20 +7,22 @@ namespace dogsrus.virtdog {
     tucked
   }
   export interface IDog extends IAnimal{
-    coatStyle: string;
-    tailStyle: string;
-    earStyle: string;
     age: number;
     barkSound: string;
-    startupBlog: string;
-    tailState: DogTailState;
-    earState: string;
+    breed: string;
     chewUrgeInterval: number;
+    coatStyle: string;
+    dogLonelyDuration: number;
+    dogLonelyEndurance: number;
+    dogSleepDuration: number;
+    dogTiredInterval: number;
+    earState: string;
+    earStyle: string;
     motherNature1Interval: number;
     motherNature2Interval: number;
-    dogTiredInterval: number;
-    dogSleepDuration: number;
-    dogLonleyEndurance: number;
-    dogLonleyDuration: number;
+    squeakyOcdChewCount: number;
+    startupBlog: string;
+    tailState: DogTailState;
+    tailStyle: string;
   }
 }

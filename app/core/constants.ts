@@ -1,54 +1,77 @@
 ﻿namespace dogsrus.virtdog {
-  export class EventNames {
-    public dogBark = 'dogBark';
-    public dogChase = 'dogChase';
-    public catMeow = 'catMeow';
-    public catBO = 'catBO';
-    public catMove = 'catMove';
-    public catHiss = 'catHiss';
-    public decapitate = 'decapitate';
-    public masterCall = 'masterCall';
-    public masterThrow = 'masterThrow';
-    public masterFeed = 'masterFeed';
-    public masterTake = 'masterTake';
-    public motherNatureCalls1 = 'motherNatureCalls1';
-    public motherNatureCalls2 = 'motherNatureCalls2';
-    public hunger = 'hunger';
-    public chewUrge = 'chewUrge';
-    public exhaustion = 'exhaustion';
-    public loneliness = 'loneliness';
-    public excitement = 'excitement';
-    public layAround = 'layAround';
-    public animalRun = 'animalRun';
-    public personPet = 'personPet';
-    public personThreaten = 'personThreaten';
-    public commandSit = 'sit';
-    public commandLayDown = 'lay down';
-    public commandStay = 'stay';
-    public commandShake = 'shake';
-    public changeDomain = 'changeDomain';
-  }
+  var eventNames = {
+    dogBark: 'dogBark',
+    dogChase: 'dogChase',
+    catMeow: 'catMeow',
+    catBO: 'catBO',
+    catMove: 'catMove',
+    catHiss: 'catHiss',
+    decapitate: 'decapitate',
+    masterCall: 'masterCall',
+    masterThrow: 'masterThrow',
+    masterFeed: 'masterFeed',
+    masterTake: 'masterTake',
+    motherNatureCalls1: 'motherNatureCalls1',
+    motherNatureCalls2: 'motherNatureCalls2',
+    hunger: 'hunger',
+    chewUrge: 'chewUrge',
+    exhaustion: 'exhaustion',
+    loneliness: 'loneliness',
+    excitement: 'excitement',
+    layAround: 'layAround',
+    animalRun: 'animalRun',
+    personPet: 'personPet',
+    personThreaten: 'personThreaten',
+    commandSit: 'sit',
+    commandLayDown: 'lay down',
+    commandStay: 'stay',
+    commandShake: 'shake',
+    changeDomain: 'changeDomain'
+  };
+  export type EventNames = typeof eventNames;
 
-  export class RoverConfig {
-    public roverUrl = 'http://localhost:8200//mars-photos/api/v1/rovers/curiosity/photos';
-    public apiKey = 'DEMO_KEY';
-    public camera = 'FHAZ';
-    public earthDate = '2014-8-26';
-    public roverName = 'curiosity';
-    public alternateUrl = 'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos';
-  }
+  let defaultRoverUnit = {
+    alternateUrl: 'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos',
+    camera: 'FHAZ',
+    cameraList: '|FHAZ|RHAZ|MAST|CHEMCAM|MAHLI|MARDI|NAVCAM|',
+    maxPageNumber: 149,
+    maxPhotoDateOffset: 30,
+    minPhotoDate: '2012-8-6',
+    roverName: 'curiosity',
+    roverUrl: 'http://localhost:8200/mars-photos/api/v1/rovers/curiosity/photos'
+  };
+  export type Rover = typeof defaultRoverUnit;
 
-  export class DogPlaces {
-    public home: DogDomain = { name: 'home', imagePath: 'zeusinside.jpg', indoors: true, placeObjects: [] };
-    public frontYard: DogDomain = { name: 'front yard', imagePath: 'zeusfrontyard.jpg', indoors: false, placeObjects: [] };
-    public backYard: DogDomain = { name: 'back yard', imagePath: 'zeusbackyard.jpg', indoors: false, placeObjects: [] };
-    public park: DogDomain = { name: 'park', imagePath: 'zeuspark.jpg', indoors: false, placeObjects: [] };
-    public bathroom: DogDomain = { name: 'bathroom', imagePath: 'fireplug.jpg', indoors: false, placeObjects: [] };
-  }
+  let roverConfig = {
+      apiKey: 'DEMO_KEY',
+      defaultRover: defaultRoverUnit,
+      paramKeyApiKey: 'api_key',
+      paramKeyCamera: 'camera',
+      paramKeyEarthDate: 'earth_date',
+      paramKeyError: 'errors',
+      paramKeyPage: 'page',
+      rovers: new Array(defaultRoverUnit)
+    };
+  export type RoverConfig = typeof roverConfig;
 
-  (() => {
-    dogsrus.virtdog.getModuleCore().constant('eventNames', new EventNames());
-    dogsrus.virtdog.getModuleCore().constant('roverConfig', new RoverConfig());
-    dogsrus.virtdog.getModuleCore().constant('dogPlaces', new DogPlaces());
-  })();
+  var dogPlaces = {
+    home: <DogDomain>{ name: 'home', imagePath: 'zeusinside.jpg', indoors: true, placeObjects: [] },
+    frontYard: <DogDomain>{ name: 'front yard', imagePath: 'zeusfrontyard.jpg', indoors: false, placeObjects: [] },
+    backYard: <DogDomain>{ name: 'back yard', imagePath: 'zeusbackyard.jpg', indoors: false, placeObjects: [] },
+    park: <DogDomain>{ name: 'park', imagePath: 'zeuspark.jpg', indoors: false, placeObjects: [] },
+    bathroom: <DogDomain>{ name: 'bathroom', imagePath: 'fireplug.jpg', indoors: false, placeObjects: [] }
+  };
+  export type DogPlaces = typeof dogPlaces;
+
+  var appValues = {
+    restStatusBadParam: -42,
+    restStatusNoPhotos: -37,
+    restStatusBadRover: -7
+  };
+  export type AppValues = typeof appValues;
+
+  getModuleCore().constant('eventNames', eventNames);
+  getModuleCore().constant('roverConfig', roverConfig);
+  getModuleCore().constant('dogPlaces', dogPlaces);
+  getModuleCore().constant('appValues', appValues);
 }

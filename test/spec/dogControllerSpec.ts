@@ -1,249 +1,260 @@
 ﻿/// <reference path="../../typings/index.d.ts" />
+namespace dogsrus.virtdogtest {
+  import vdog = virtdog;
+  describe('In the file dogController.ts', () => {
+    describe('the dogController\'s', () => {
+      let sut: vdog.DogController,
+        $rootScope: ng.IRootScopeService,
+        $controller: ng.IControllerService,
+        $interval: ng.IIntervalService,
+        dogConfig: vdog.DogConfiguration,
+        eventNamesTest: vdog.EventNames,
+        dogConstructorParams: {
+          $rootScope: ng.IRootScopeService;
+          $interval: ng.IIntervalService;
+          dogConfig: vdog.DogConfiguration;
+        };
 
-describe('In the file dogController.js', () => {
-  beforeEach(angular.mock.module('app.dog'));
-  describe('the dogController\'s', () => {
-
-    let $rootScope: ng.IRootScopeService,
-      $controller: ng.IControllerService,
-      $interval: ng.IIntervalService,
-      dogConfig: dogsrus.virtdog.DogConfiguration,
-      eventNames: dogsrus.virtdog.EventNames,
-      dogConstructorParams: {
-        $rootScope: ng.IRootScopeService;
-        $interval: ng.IIntervalService;
-        dogConfig: dogsrus.virtdog.DogConfiguration;
-        eventNames: dogsrus.virtdog.EventNames
+      dogConfig = {
+        appTitle: 'Virtual Dog Demo',
+        otherDogs: [],
+        startDog: <vdog.IDog>{},
+        version: '0.0.1'
       };
+      beforeEach(() => {
+        angular.mock.module('app.core', ($injector: ng.auto.IInjectorService) => {
+          eventNamesTest = $injector.get<vdog.EventNames>('eventNames');
+        });
+        angular.mock.module('app.dog');
+        inject(($injector: ng.auto.IInjectorService) => {
+          $controller = $injector.get('$controller');
+          $rootScope = $injector.get('$rootScope');
+          $interval = $injector.get('$interval');
+        });
 
-    dogConfig = {
-      appTitle: 'Virtual Dog Demo',
-      otherDogs: [],
-      startDog: <dogsrus.virtdog.IDog>{},
-      version: '1.0.0'
-    };
-
-    eventNames = <dogsrus.virtdog.EventNames>{};
-    beforeEach(inject(($injector: ng.auto.IInjectorService) => {
-      // we need to construct every time so set up for that
-      $controller = $injector.get<ng.IControllerService>('$controller');
-      $rootScope = $injector.get<ng.IRootScopeService>('$rootScope');
-      $interval = $injector.get<ng.IIntervalService>('$interval');
-
-      dogConstructorParams = {
-        $rootScope: $rootScope,
-        $interval: $interval,
-        dogConfig: dogConfig,
-        eventNames: eventNames
-      };
-    }));
-    
-    // todo: add tests for all startDog properties
-    describe('constructor:', () => {
-      // todo: add a beforeEach and move startdog settings and instantiation here
-      it('should set familiarName', () => {
-        dogConfig.startDog.familiarName = 'testRover';
-        // todo: constructing this for every tests, s/b in beforeEach
-        let sut: dogsrus.virtdog.DogController = $controller<dogsrus.virtdog.DogController>(
-          'dogController', dogConstructorParams)
-
-        expect(sut.familiarName).toEqual(dogConfig.startDog.familiarName);
+        dogConstructorParams = {
+          $rootScope: $rootScope,
+          $interval: $interval,
+          dogConfig: dogConfig
+        };
+        dogConfig.startDog.age = 99;
+        dogConfig.startDog.barkSound = 'testbark';
+        dogConfig.startDog.breed = 'testbreed';
+        dogConfig.startDog.chewUrgeInterval = 1000 * 1 * 1 * 1;
+        dogConfig.startDog.coatStyle = 'testCoatStyle';
+        dogConfig.startDog.defaultAction = 'testDefaultAction';
+        dogConfig.startDog.dogLonelyDuration = 1000 * 2 * 1 * 1;
+        dogConfig.startDog.dogLonelyEndurance = 1000 * 3 * 1 * 1;
+        dogConfig.startDog.dogSleepDuration = 1000 * 4 * 1 * 1;
+        dogConfig.startDog.dogTiredInterval = 1000 * 5 * 1 * 1;
+        dogConfig.startDog.earState = 'testEarState';
+        dogConfig.startDog.earStyle = 'testEarStyle';
+        dogConfig.startDog.familiarName = 'testFamiliarName';
+        dogConfig.startDog.motherNature1Interval = 1000 * 6 * 1 * 1;
+        dogConfig.startDog.motherNature2Interval = 1000 * 7 * 1 * 1;
+        dogConfig.startDog.speciesName = 'testSpeciesName';
+        dogConfig.startDog.startupBlog = 'testStartupBlog';
+        dogConfig.startDog.tailState = vdog.DogTailState.tucked;
+        dogConfig.startDog.tailStyle = 'testTailStyle';
+        sut = $controller<vdog.DogController>('dogController', dogConstructorParams);
       });
 
-      it('should set barkSound', () => {
-        dogConfig.startDog.barkSound = 'testBark';
-
-        var sut: dogsrus.virtdog.DogController = $controller<dogsrus.virtdog.DogController>(
-          'dogController', dogConstructorParams)
-
-        expect(sut.barkSound).toEqual(dogConfig.startDog.barkSound);
-      });
-
-      it('should set age', () => {
-        dogConfig.startDog.age = 7;
-
-        var sut: dogsrus.virtdog.DogController = $controller<dogsrus.virtdog.DogController>(
-          'dogController', dogConstructorParams)
-
-        expect(sut.age).toEqual(dogConfig.startDog.age);
-      });
-
-      it('should blog startupBlog', () => {
-        var expectedBlog = 'Test Startup Blog';
-        dogConfig.startDog.startupBlog = expectedBlog;
-
-        var sut: dogsrus.virtdog.DogController = $controller<dogsrus.virtdog.DogController>(
-          'dogController', dogConstructorParams)
-
-        expect(sut.blogContent).toContain(expectedBlog);
-      });
-
-    });
-
-    // todo: make sure all master/event/objects are coveres
-    describe('eventHandler for the masterThrow event:', () => {
-      eventNames.masterThrow = 'masterThrow';
-      
-      // todo: add beforeEach for instantiation and spyOn
-      it('should blog "master" and "threw"', () => {
-        var thrownObject = new dogsrus.virtdog.DogObject(
-          'testObject', false, false);
-        spyOn(thrownObject, 'chewOn');
-
-        var sut: dogsrus.virtdog.DogController = $controller<dogsrus.virtdog.DogController>(
-          'dogController', dogConstructorParams)
-
-        expect(sut.blogContent).not.toContain('master');
-        expect(sut.blogContent).not.toContain('threw');
-
-        $rootScope.$broadcast(
-          eventNames.masterThrow, thrownObject);
-
-        expect(sut.blogContent).toContain('master');
-        expect(sut.blogContent).toContain('threw');
-      });
-
-      describe('when thrown object is chewy, not edible:', () => {
-        let thrownObject = new dogsrus.virtdog.DogObject(
-          'testChewyObject', true, false);
-        it('should call chewOn for thrown object', () => {
-          spyOn(thrownObject, 'chewOn');
-
-          var sut: dogsrus.virtdog.DogController = $controller<dogsrus.virtdog.DogController>(
-            'dogController', dogConstructorParams)
-
-          $rootScope.$broadcast(eventNames.masterThrow, thrownObject);
-
-          expect(thrownObject.chewOn).toHaveBeenCalled();
+      describe('constructor', () => {
+        it('should set barkSound', () => {
+          expect(sut.barkSound).toEqual(dogConfig.startDog.barkSound);
+        });
+        it('should set age', () => {
+          expect(sut.age).toEqual(dogConfig.startDog.age);
+        });
+        it('should set breed', () => {
+          expect(sut.breed).toEqual(dogConfig.startDog.breed);
+        });
+        it('should set chewUrgeInterval', () => {
+          expect(sut.chewUrgeInterval).toEqual(dogConfig.startDog.chewUrgeInterval);
+        });
+        it('should set coatStyle', () => {
+          expect(sut.coatStyle).toEqual(dogConfig.startDog.coatStyle);
+        });
+        it('should set defaultAction', () => {
+          expect(sut.defaultAction).toEqual(dogConfig.startDog.defaultAction);
+        });
+        it('should set dogLonelyDuration', () => {
+          expect(sut.dogLonelyDuration).toEqual(dogConfig.startDog.dogLonelyDuration);
+        });
+        it('should set dogLonelyEndurance', () => {
+          expect(sut.dogLonelyEndurance).toEqual(dogConfig.startDog.dogLonelyEndurance);
+        });
+        it('should set dogSleepDuration', () => {
+          expect(sut.dogSleepDuration).toEqual(dogConfig.startDog.dogSleepDuration);
+        });
+        it('should set dogTiredInterval', () => {
+          expect(sut.dogTiredInterval).toEqual(dogConfig.startDog.dogTiredInterval);
+        });
+        it('should set earState', () => {
+          expect(sut.earState).toEqual(dogConfig.startDog.earState);
+        });
+        it('should set earStyle', () => {
+          expect(sut.earStyle).toEqual(dogConfig.startDog.earStyle);
+        });
+        it('should set familiarName', () => {
+          expect(sut.familiarName).toEqual(dogConfig.startDog.familiarName);
+        });
+        it('should set motherNature1Interval', () => {
+          expect(sut.motherNature1Interval).toEqual(dogConfig.startDog.motherNature1Interval);
+        });
+        it('should set motherNature2Interval', () => {
+          expect(sut.motherNature2Interval).toEqual(dogConfig.startDog.motherNature2Interval);
+        });
+        it('should set speciesName', () => {
+          expect(sut.speciesName).toEqual(dogConfig.startDog.speciesName);
+        });
+        it('should set startupBlog', () => {
+          expect(sut.startupBlog).toEqual(dogConfig.startDog.startupBlog);
+        });
+        it('should set tailState', () => {
+          expect(sut.tailState).toEqual(dogConfig.startDog.tailState);
+        });
+        it('should set tailStyle', () => {
+          expect(sut.tailStyle).toEqual(dogConfig.startDog.tailStyle);
+        });
+        it('other stuff happens when new', () => {
+          pending('add other constructor tests');
         });
       });
-
-      describe('when thrown object is not chewy, not edible', () => {
-        let thrownObject = new dogsrus.virtdog.DogObject(
-          'testNotChewyObject', false, false);
-
-        // todo: fix
-        it('should not call chewOn for thrown object', () => {
-          spyOn(thrownObject, 'chewOn');
-
-          var sut: dogsrus.virtdog.DogController = $controller<dogsrus.virtdog.DogController>(
-            'dogController', dogConstructorParams)
-
-          $rootScope.$broadcast(eventNames.masterThrow, thrownObject);
-
-          expect(thrownObject.chewOn).not.toHaveBeenCalled();
-        });
-      });
-
-      describe('when thrown object is edible', () => {
-        let thrownObject = new dogsrus.virtdog.DogObject(
-          'testEdibleObject', false, true);
-
+      // todo: need to test feed event
+      describe('masterFeed event listener', () => {
+        let foodObject: vdog.DogObject;
         beforeEach(() => {
-          spyOn(thrownObject, 'chewOn');
+          foodObject = new vdog.DogObject('meh', false, false);
+          sut.blogContent = '';
         });
-
-        // todo: fix
-        it('should not call chewOn for thrown object', () => {
-          var sut: dogsrus.virtdog.DogController = $controller<dogsrus.virtdog.DogController>(
-            'dogController', dogConstructorParams)
-
-          $rootScope.$broadcast(eventNames.masterThrow, thrownObject);
-
-          expect(thrownObject.chewOn).not.toHaveBeenCalled();
+        it('should blog master', () => {
+          $rootScope.$broadcast(eventNamesTest.masterFeed, foodObject);
+          expect(sut.blogContent).toContain('master');
         });
-
-        it('should not blog "returned" because dog eats it', () => {
-          var sut: dogsrus.virtdog.DogController = $controller<dogsrus.virtdog.DogController>(
-            'dogController', dogConstructorParams)
-
-          $rootScope.$broadcast(eventNames.masterThrow, thrownObject);
-
-          expect(sut.blogContent).not.toContain('returned');
+        describe('when object is edible', () => {
+          beforeEach(() => {
+            foodObject.edible = true;
+          });
+          it('should make tail wag', () => {
+            sut.tailState = vdog.DogTailState.drooped;
+            $rootScope.$broadcast(eventNamesTest.masterFeed, foodObject);
+            expect(sut.tailState).toEqual(vdog.DogTailState.wagging);
+          });
+          describe('and is dog food', () => {
+            beforeEach(() => {
+              foodObject.name = 'dog food';
+            });
+            it('should blog ignored', () => {
+              $rootScope.$broadcast(eventNamesTest.masterFeed, foodObject);
+              expect(sut.blogContent).toContain('ignored');
+            });
+            it('should blog dumped', () => {
+              $rootScope.$broadcast(eventNamesTest.masterFeed, foodObject);
+              expect(sut.blogContent).toContain('dumped');
+            });
+            it('should blog piece', () => {
+              $rootScope.$broadcast(eventNamesTest.masterFeed, foodObject);
+              expect(sut.blogContent).toContain('piece');
+            });
+          });
+          describe('and is not dog food', () => {
+            it('should blog devour', () => {
+              $rootScope.$broadcast(eventNamesTest.masterFeed, foodObject);
+              expect(sut.blogContent).toContain('devour');
+            });
+            it('should blog immediately', () => {
+              $rootScope.$broadcast(eventNamesTest.masterFeed, foodObject);
+              expect(sut.blogContent).toContain('immediately');
+            });
+            it('should blog look', () => {
+              $rootScope.$broadcast(eventNamesTest.masterFeed, foodObject);
+              expect(sut.blogContent).toContain('look');
+            });
+            it('should blog hungry', () => {
+              $rootScope.$broadcast(eventNamesTest.masterFeed, foodObject);
+              expect(sut.blogContent).toContain('hungry');
+            });
+          });
+        });
+        describe('when object is not edible', () => {
+          it('should make tail elevated', () => {
+            sut.tailState = vdog.DogTailState.drooped;
+            $rootScope.$broadcast(eventNamesTest.masterFeed, foodObject);
+            expect(sut.tailState).toEqual(vdog.DogTailState.elevated);
+          });
+          it('should blog sniff', () => {
+            $rootScope.$broadcast(eventNamesTest.masterFeed, foodObject);
+            expect(sut.blogContent).toContain('sniff');
+          });
+          it('should blog tilt', () => {
+            $rootScope.$broadcast(eventNamesTest.masterFeed, foodObject);
+            expect(sut.blogContent).toContain('tilt');
+          });
         });
       });
-
-    });
-
-    // todo: eliminate repetitive code
-    describe('eventHandler for chew urge interval expiration:', () => {
-      dogConfig.startDog.chewUrgeInterval = 100;
-      describe('with one chewy Object', () => {
-        let chewyObject = new dogsrus.virtdog.DogObject(
-          'testChewyObject', true, false);
-
+      describe('masterThrow event listener', () => {
+        let throwObject: vdog.DogObject;
         beforeEach(() => {
-          spyOn(chewyObject, 'chewOn');
+          throwObject = jasmine.createSpyObj('throwObject', ['chewOn']);
+          throwObject.name = 'meh';
+          throwObject.flies = false;
+          throwObject.chewy = false;
+          (<jasmine.Spy>(throwObject.chewOn)).and.returnValue(
+            vdog.ChewExperience.fair);
+          sut.blogContent = '';
         });
-
-        it('should call chewOn for chewy object', () => {
-
-          let sut: dogsrus.virtdog.DogController = $controller<dogsrus.virtdog.DogController>(
-            'dogController', dogConstructorParams)
-
-          sut.chewObjects.push(chewyObject);
-
-          $interval.flush(99);
-          expect(chewyObject.chewOn).not.toHaveBeenCalled();
-          $interval.flush(1);
-          expect(chewyObject.chewOn).toHaveBeenCalled();
+        it('should blog master', () => {
+          $rootScope.$broadcast(eventNamesTest.masterThrow, throwObject);
+          expect(sut.blogContent).toContain('master');
         });
-
-        it('should blog "chewed"', () => {
-          var sut: dogsrus.virtdog.DogController = $controller<dogsrus.virtdog.DogController>(
-            'dogController', dogConstructorParams)
-
-          sut.chewObjects.push(chewyObject);
-
-          expect(sut.blogContent).not.toContain('chewed');
-
-          $interval.flush(100);
-
-          expect(sut.blogContent).toContain('chewed');
+        it('should blog thrown object name', () => {
+          $rootScope.$broadcast(eventNamesTest.masterThrow, throwObject);
+          expect(sut.blogContent).toContain(throwObject.name);
         });
-
-        it('should blog chewyObject name', () => {
-          var sut: dogsrus.virtdog.DogController = $controller<dogsrus.virtdog.DogController>(
-            'dogController', dogConstructorParams)
-
-          sut.chewObjects.push(chewyObject);
-
-          expect(sut.blogContent).not.toContain(chewyObject.name);
-
-          $interval.flush(100);
-
-          expect(sut.blogContent).toContain(chewyObject.name);
+        it('when thrown object does not fly should blog snapping', () => {
+          $rootScope.$broadcast(eventNamesTest.masterThrow, throwObject);
+          expect(sut.blogContent).toContain('snapping');
         });
-
+        it('when thrown object flies should blog leapt', () => {
+          throwObject.flies = true;
+          $rootScope.$broadcast(eventNamesTest.masterThrow, throwObject);
+          expect(sut.blogContent).toContain('leapt');
+        });
+        it('when thrown object is chewy and not in chewObjects ' +
+          'should add thrown object to chewObjects', () => {
+            throwObject.chewy = true;
+            sut.chewObjects = [];
+            $rootScope.$broadcast(eventNamesTest.masterThrow, throwObject);
+            expect(sut.chewObjects).toContain(throwObject);
+          });
+        describe('when thrown object chewOn returns squeaky', () => {
+          beforeEach(() => {
+            (<jasmine.Spy>(throwObject.chewOn)).and.returnValue(
+              vdog.ChewExperience.squeaky);
+          });
+          it('should blog squeak', () => {
+            $rootScope.$broadcast(eventNamesTest.masterThrow, throwObject);
+            expect(sut.blogContent).toContain('squeak');
+          });
+          it('should call chewOn squeakyOcdChewCount+1 times', () => {
+            sut.squeakyOcdChewCount = 5;
+            $rootScope.$broadcast(eventNamesTest.masterThrow, throwObject);
+            expect(throwObject.chewOn).toHaveBeenCalledTimes(
+              sut.squeakyOcdChewCount + 1);
+          });
+          it('then chewOn stops returning squeaky should blog \'try again\'',
+            () => {
+              (<jasmine.Spy>(throwObject.chewOn)).and.returnValues(
+                vdog.ChewExperience.squeaky,
+                vdog.ChewExperience.great
+              );
+              sut.squeakyOcdChewCount = 1;
+              $rootScope.$broadcast(eventNamesTest.masterThrow, throwObject);
+              expect(sut.blogContent).toContain('try again');
+            });
+        });
       });
-
-      describe('with three chewy objects, one being expensive', () => {
-        let expensiveChewyObject = new dogsrus.virtdog.DogObject(
-          'expensiveChewyObject', true, false);
-        expensiveChewyObject.expensive = true;
-        let chewObjects = [
-          new dogsrus.virtdog.DogObject('junk', true, false),
-          new dogsrus.virtdog.DogObject('junk2', true, false)];
-        chewObjects.push(expensiveChewyObject);
-
-        beforeEach(() => {
-          spyOn(expensiveChewyObject, 'chewOn');
-        });
-
-        it('should call chewOn for expensive object', () => {
-          var sut: dogsrus.virtdog.DogController = $controller<dogsrus.virtdog.DogController>(
-            'dogController', dogConstructorParams)
-
-          sut.chewObjects.push(expensiveChewyObject);
-
-          $interval.flush(100);
-
-          expect(expensiveChewyObject.chewOn).toHaveBeenCalled();
-        });
-
-      });
-
     });
   });
-
-});
+}
