@@ -34,3 +34,12 @@ Also globally installed:
 ### To bring up the Jasmine tests in the browser simply navigate to the test/SpecRunner.html file in your browser
 
 No frills, super simple, just a dog and his blog.
+
+Note: Since you quickly run out of hits on the Mars Rover API site using the 
+demo key, I added a private key (app/core/storePrivateKey.ts) file to let you 
+store your private key in local storage which gives you tons of 
+downloads/hour/day unlike demo key which is limited to 50/hour - 100/day. Get 
+a key from NASA, like I did and throw it in the file. Just make sure not to 
+check that file into GitHub ever since the key is super secret. Once your key 
+is stored you can delete the storePrivateKey file, the key does not expire in 
+local storage.
