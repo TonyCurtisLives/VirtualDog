@@ -7,3 +7,4 @@ server/**/*.js
 test/**/*.js
 .vscode/settings.json
 *.diff
+app/core/storePrivateKey.*
