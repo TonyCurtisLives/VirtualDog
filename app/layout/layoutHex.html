@@ -13,9 +13,8 @@
         <h1>Master: {{master.familiarName}}</h1>
         <p class="sliderParagraph">
           Object: <select id="selectObject" ng-model="master.selectedObject" ng-options="object.name for object in master.masterObjects"></select>
-          <br><br> 
-          Action: <select id="selectAction" ng-model="master.selectedAction" ng-options="masterAction.actionName for masterAction in master.masterActions"></select>
-          $nbsp<button class="dogButtonStyle" id="buttonMasterAction" ng-click="master.selectedAction.actionFunc(master.selectedObject)">Perform Action</button>
+          <br><br> Action: <select id="selectAction" ng-model="master.selectedAction" ng-options="masterAction.actionName for masterAction in master.masterActions"></select>          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+          <button class="dogButtonStyle" id="buttonMasterAction" ng-click="master.selectedAction.actionFunc(master.selectedObject)">Perform Action</button>
         </p>
       </div>
     </li>
@@ -67,13 +66,23 @@
       <div class="selectStyle" ng-controller="roverPhotosController as roverController">
         <!--<img ng-src="../../content/zeushome.jpg" alt=""/>-->
         <img ng-src="{{roverController.roverPhotoUrl}}" alt="" />
+        <br/><br/><br/><br/><br/><br/><br/><br/> 
+        {{roverController.roverError}}
         <h1>Mars Rovers</h1>
         <p class="sliderParagraph">
-          Camera: <select id="selectCamera" ng-model="roverController.roverCamera" ng-options="camera.full_name for camera in roverController.cameras"></select><br><br>
-          &nbsp<button class="dogButtonStyle" id="buttonGetPhotos" ng-click="roverController.getPhotos(roverController.roverCamera.name)">Get Rover Photos</button>
-          <!--Domain: <select ng-model="domainController.place" ng-options="dogPlace.name for dogPlace in domainController.places"
-            ng-change="domainController.domainSelected(domainController.place)">
-                  </select><br>-->
+          Rover: <select id="selectRover" ng-model="roverController.rover" ng-options="rover.roverName for rover in roverController.rovers track by rover.roverName"
+            ng-change="roverController.roverSelected()"></select> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+          &nbsp; &nbsp; &nbsp; &nbsp; Cam: <select id="selectCamera" ng-model="roverController.roverCamera" ng-options="camera for camera in roverController.cameras track by camera"></select>
+          <br/><br/>
+          <input type="date" ng-model="roverController.selectedDate"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+          &nbsp; &nbsp;&nbsp;
+          <button class="dogButtonStyle" id="buttonGetPhotos" ng-click="roverController.getPhotos(roverController.selectedDate, roverController.roverCamera, roverController.rover.roverName)">Get Rover Photos</button>
+          <br/><br/>
+          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+          <button class="dogButtonStyle" id="buttonPhotoPrevious" ng-click="roverController.setPhoto(-1)">&nbsp; Prev &nbsp;</button>
+          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+          {{roverController.currentPhotoIndex + 1}} of {{roverController.photosToDroolOver.length}}
+          <button class="dogButtonStyle" id="buttonPhotoNext" ng-click="roverController.setPhoto(1)">&nbsp; Next &nbsp;</button>
           <br>
         </p>
       </div>
@@ -101,8 +110,7 @@
         <h1>Other People</h1>
         <p class="sliderParagraph">
           Person: <select id="selectPerson" ng-model="peopleCtrl.selectedPerson" ng-options="person.familiarName for person in peopleCtrl.people"></select>
-          <br><br>          
-          Action: <select id="selectPersonAction" ng-model="peopleCtrl.selectedAction" ng-options="personAction.actionName for personAction in peopleCtrl.personActions"></select>
+          <br><br> Action: <select id="selectPersonAction" ng-model="peopleCtrl.selectedAction" ng-options="personAction.actionName for personAction in peopleCtrl.personActions"></select>
           <br><br>
           <button class="dogButtonStyle" id="personActionButton" ng-click="peopleCtrl.selectedAction.actionFunc(peopleCtrl.selectedPerson)">Perform Action</button>
         </p>

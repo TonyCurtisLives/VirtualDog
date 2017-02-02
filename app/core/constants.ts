@@ -28,6 +28,8 @@
     commandShake: 'shake',
     changeDomain: 'changeDomain'
   };
+
+  
   export type EventNames = typeof eventNames;
 
   let defaultRoverUnit = {
@@ -37,13 +39,15 @@
     maxPageNumber: 149,
     maxPhotoDateOffset: 30,
     minPhotoDate: '2012-8-6',
+    maxPhotoDate: '',
     roverName: 'curiosity',
     roverUrl: 'http://localhost:8200/mars-photos/api/v1/rovers/curiosity/photos'
   };
   export type Rover = typeof defaultRoverUnit;
 
+  let privateKey = localStorage.getItem('privateApiKey');
   let roverConfig = {
-      apiKey: 'DEMO_KEY',
+      apiKey: privateKey !== null ? privateKey : 'DEMO_KEY',
       defaultRover: defaultRoverUnit,
       paramKeyApiKey: 'api_key',
       paramKeyCamera: 'camera',
@@ -52,6 +56,36 @@
       paramKeyPage: 'page',
       rovers: new Array(defaultRoverUnit)
     };
+  
+  roverConfig.rovers.push(
+    {
+    alternateUrl: 'https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos',
+    camera: 'FHAZ',
+    cameraList: '|FHAZ|RHAZ|NAVCAM|PANCAM|MINITES|',
+    maxPageNumber: 149,
+    maxPhotoDateOffset: 30,
+    minPhotoDate: '2004-01-25',
+    maxPhotoDate: '',
+    roverName: 'opportunity',
+    roverUrl: 'http://localhost:8200/mars-photos/api/v1/rovers/opportunity/photos'
+    }
+  );
+
+  roverConfig.rovers.push(
+    {
+    alternateUrl: 'https://api.nasa.gov/mars-photos/api/v1/rovers/spirit/photos',
+    camera: 'FHAZ',
+    cameraList: '|FHAZ|RHAZ|NAVCAM|PANCAM|MINITES|',
+    maxPageNumber: 149,
+    maxPhotoDateOffset: 30,
+    minPhotoDate: '2004-01-04',
+    maxPhotoDate: '2010-03-21',
+    roverName: 'spirit',
+    roverUrl: 'http://localhost:8200/mars-photos/api/v1/rovers/spirit/photos'
+    }
+  );
+
+
   export type RoverConfig = typeof roverConfig;
 
   var dogPlaces = {

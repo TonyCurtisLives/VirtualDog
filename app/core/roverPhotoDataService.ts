@@ -3,7 +3,7 @@ namespace dogsrus.virtdog {
     data: string;
     status: number;
   }
-  
+
   export class RoverPhotoDataService {
     static $inject = ['$http', 'roverConfig', 'appValues',
       'roverPhotoTranslationService', 'roverParamValidationService', '$q'];
@@ -17,7 +17,8 @@ namespace dogsrus.virtdog {
 
     public getTranslatedCameras(
       earthDate = this.roverConfig.defaultRover.minPhotoDate): ng.IPromise<DogCamera[]> {
-      //if (earthDate) {return;}
+      
+      let error = <IPromiseError>{};
       let earthDateParams = this.roverParamValidationService
         .validateParams(earthDate);
       if (earthDateParams.errors !== undefined) {
@@ -55,13 +56,14 @@ namespace dogsrus.virtdog {
 
     public getPhotos(earthDate = this.roverConfig.defaultRover.minPhotoDate,
       page = 0, camera = '', roverName = ''): ng.IPromise<IRestPhotos> {
+
       let error = <IPromiseError>{};
       let earthDateParams: any;
       let rover = this.getRover(roverName, error);
 
       if (rover) {
         earthDateParams = this.getParams(
-          earthDate, page, camera, rover, error);
+          earthDate, page, camera, error, rover);
       }
       if (!rover || !earthDateParams) {
         return this.$q.reject(error);
@@ -82,25 +84,21 @@ namespace dogsrus.virtdog {
           } else {
             return results.data;
           }
-        }, (error) => {
-          return this.$q.reject(error);
+        }, (reason) => {
+          return this.$q.reject(reason);
         });
     }
 
     public getTranslatedPhotos(
       earthDate = this.roverConfig.defaultRover.minPhotoDate,
       page = 0, camera = ''): ng.IPromise<DogRover> {
-      let earthDateParams = this.roverParamValidationService
-        .validateParamsPage(earthDate, page, camera);
-      if (earthDateParams.errors !== undefined) {
-        return this.$q((resolve: ng.IHttpPromiseCallbackArg<any>, reject) => {
-          reject({
-            data: 'error: parameter invalid - ' +
-            earthDateParams.errors.join(', '),
-            status: this.appValues.restStatusBadParam
-          });
-        });
+
+      let error = <IPromiseError>{};
+      let earthDateParams = this.getParams(earthDate, page, camera, error);
+      if (!earthDateParams) {
+        return this.$q.reject(error);
       }
+
       let roverHttpConfig: ng.IRequestShortcutConfig = {
         params: earthDateParams
       };
@@ -112,17 +110,16 @@ namespace dogsrus.virtdog {
           let returnData = results.data;
           // here if we got no photos, can we call again with date - 1?
           if (this.isError(returnData)) {
-            return this.$q.reject({
-              data: `INFO: no photos found`,
-              status: this.appValues.restStatusNoPhotos
-            });
+            error.data = 'INFO: no photos found';
+            error.status = this.appValues.restStatusNoPhotos;
+            return this.$q.reject(error);
           } else {
             let translatedData = this.roverPhotoTranslationService
               .translateAllPhotos<IRestPhotos, DogRover>(returnData);
             return translatedData;
           }
-        }, (error: ng.IHttpPromiseCallbackArg<any>) => {
-          return this.$q.reject(error);
+        }, (reason: ng.IHttpPromiseCallbackArg<any>) => {
+          return this.$q.reject(reason);
         });
     }
 
@@ -146,7 +143,7 @@ namespace dogsrus.virtdog {
     }
 
     private getParams(earthDate: string, page: number, camera: string,
-      rover: Rover, error: IPromiseError): boolean {
+      error: IPromiseError, rover = this.roverConfig.defaultRover): {} {
       let earthDateParams = this.roverParamValidationService
         .validateParamsPage(earthDate, page, camera, rover);
       if (earthDateParams.errors !== undefined) {
@@ -158,6 +155,7 @@ namespace dogsrus.virtdog {
       return earthDateParams;
     }
 
+    // todo: also returns {error: { code: "OVER_RATE_LIMIT", {message: "you have exceeded your rate limit."}}}
     // typeguard - since rest returns {"errors":"No Photos Found"}
     private isError(
       returnData: IRestPhotos | IRestError): returnData is IRestError {

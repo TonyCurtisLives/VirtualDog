@@ -760,6 +760,7 @@ describe('in the file roverPhotoDataService.ts', () => {
           maxPageNumber: 0,
           maxPhotoDateOffset: 0,
           minPhotoDate: '2002-2-2',
+          maxPhotoDate: '',
           roverName: 'meh',
           roverUrl: 'http://testUrl'
         }]
