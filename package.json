@@ -19,7 +19,7 @@
   },
   "scripts": {
     "postinstall": "bower install && typings install && echo Typings Installation version && typings -v && tsc && echo TypeScript Compilation version && tsc -v",
-    "start": "concurrently --prefix-length 16 --prefix command \"http-server -a 0.0.0.0 -p 8042\" \"node server/tinyserv\" \"tsc -w\" ",
+    "start": "concurrently --prefix-length 16 --prefix command \"http-server -o -a 0.0.0.0 -p 8042\" \"node server/tinyserv\" \"tsc -w\" ",
     "bower-typings": "bower install && typings install && echo Typings Installation version && typings -v",
     "bower": "bower",
     "typings": "typings",
